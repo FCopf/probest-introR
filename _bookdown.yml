@@ -1,0 +1,20 @@
+output_dir: "docs"
+book_filename: "IntroR"
+language:
+  ui:
+    chapter_name: "Capítulo "
+delete_merged_file: true
+new_session: no
+clean: ["IntroR.bbl", "R-packages.bib"]
+rmd_files: ["index.Rmd"
+            ,"rmdfiles/01-fundamentosr/0100-PART_fundamentosr.Rmd"
+            ,"rmdfiles/01-fundamentosr/0101-intro.Rmd"
+            ,"rmdfiles/01-fundamentosr/0102-manipulacao.Rmd"
+            ,"rmdfiles/01-fundamentosr/0103-visualizacao_basico.Rmd"
+            
+            ,"rmdfiles/02-ciendados/0200-PART-ciendados.Rmd"
+            ,"rmdfiles/02-ciendados/0201-tidyInstall.Rmd"
+            ,"rmdfiles/02-ciendados/0202-importa.Rmd"
+            ,"rmdfiles/02-ciendados/0203-pipe.Rmd"
+            ,"rmdfiles/02-ciendados/0204-format.Rmd"
+            ,"rmdfiles/02-ciendados/0205-ggplot2.Rmd"]

@@ -1,0 +1,306 @@
+# Manipulação e formatação de dados {#format}
+
+Após importar uma basde de dados para o R, os principais pacotes para manipulação e formatação de data frames são o ```dplyr``` e o ```tidyr```. As funções destes pacotes oferecem uma etapa inicial na análise, modelagem e comunicação de dados. Lembramos aqui que uma base de dados é organizada em um formato de tabela em que as linhas são as *observações* e as colunas são as *variáveis* que descrevem estas observações. Estas variáveis podem ser quantitativas (contínuas ou discretas) ou qualitativas (ordenadas ou não).
+
+
+## Transformação de dados: os pacotes ```dplyr``` e ```tidyr```
+
+Aqui veremos funções principais para manipular as observações nas linhas (*Manipulate Cases*), manipular descritores nas colunas (*Manipulate Variables*) e combinar tabelas (*Combine Tables*). Na [Cheatsheets](https://rstudio.com/resources/cheatsheets/) do ```dplyr``` você verá também a variedade de funções relacionadas ao cáculo sobre vetores (*Vector Functions*), funções resumo (*Summary Functions*, e *Summarise Cases*) e manipulação de nomes das linhas.
+
+### Ordenando as linhas: funções ```arrange()``` e ```desc()```
+
+Estas funções permitem que você ordene a base de dados seguindo os valores de alguma de suas colunas. Vamos utilizar como exemplo a base de dados ```iris``` comumente utilizadas em uma variedade de tutorias sobre ciência de dados. Carrege e verifique a base de dados composta por `r nrow(iris)` linhas e `r ncol(iris)` colunas.
+
+```{r, eval=FALSE}
+data("iris")
+head(iris, 10)
+```
+
+Vamos ordenar a tabela pela coluna ```Sepal.Length```.
+
+```{r, eval=FALSE}
+iris %>% 
+  arrange(Sepal.Length)
+```
+
+```{r, echo=FALSE}
+iris %>% 
+  arrange(Sepal.Length) %>% 
+  head(10)
+
+```
+
+As linhas aparecem agora de acordo com os valores (em ordem crescente) de ```Sepal.Length```, iniciando em `r min(iris$Sepal.Length)`.
+
+Em seguida faça o mesmo em ordem *decresente*.
+
+```{r, eval=FALSE}
+iris %>% 
+  arrange(desc(Sepal.Length))
+```
+
+Podemos combinar duas colunas, ordenando a tabela em função da coluna ```Species``` (em ordem alfabética decrescente) e em função de ```Sepal.Length``` (em ordem crescente).
+
+```{r, eval=FALSE}
+iris %>% 
+  arrange(desc(Species), Sepal.Length)
+```
+
+Nos exemplos acimas, somente visualizamos a tabela em diferentes ordens. Se quisermos criar um novo objeto com a tabela em alguma destas sequências fazemos:
+
+```{r, eval=FALSE}
+iris_ordenado <- iris %>% 
+  arrange(Sepal.Length)
+
+iris_ordenado
+```
+
+```{r, echo=FALSE}
+iris %>% 
+  arrange(Sepal.Length) %>% 
+  head()
+```
+
+
+### Filtrando linhas: função ```filter()```
+
+Esta função permite extrair somente as linhas de uma tabela que satisfaçam uma condição lógica. Vamos extrair as linhas referentes à espécie ```virginica```.
+
+```{r, eval=FALSE}
+iris %>% 
+  filter(Species == "virginica")
+```
+
+Ou às espécies *diferentes* de ```virginica```.
+
+```{r, eval=FALSE}
+iris %>% 
+  filter(Species != "virginica")
+```
+
+Agora, vamos filtrar as linhas em que o comprimento das pétalas seja menor que 1.3.
+
+```{r, eval=FALSE}
+iris %>% 
+  filter(Petal.Length < 1.3)
+```
+
+E para o comprimento das pétalas seja menor que 1.3 **E** o comprimento das sépalas maior ou igual a 5.
+
+```{r, eval=FALSE}
+iris %>% 
+  filter(Petal.Length < 1.3 & Sepal.Length >= 5)
+```
+
+### Selecionando colunas: função ```select()```
+
+A função select permite extrair ou reorganizar um subconjunto colunas de um data frame. Rode os exemplos a seguir:
+
+```{r, eval=FALSE}
+iris %>% 
+  select(Petal.Length)
+```
+
+```{r, eval=FALSE}
+iris %>% 
+  select(Petal.Length, Species)
+```
+
+```{r, eval=FALSE}
+iris %>% 
+  select(Petal.Length:Species)
+```
+
+```{r, eval=FALSE}
+iris %>% 
+  select(Species:Petal.Length)
+```
+
+```{r, eval=FALSE}
+iris %>% 
+  select(!c(Petal.Length, Species))
+```
+
+```{r, eval=FALSE}
+iris %>% 
+  select(starts_with("Sepal"))
+```
+
+Finalmente, combine as funções ```filter()``` e ```select()``` para extrair um subconjunto do data frame:
+
+```{r, eval=FALSE}
+iris %>% 
+  select(starts_with("Sepal")) %>% 
+  filter(Sepal.Length <= 4.5)
+```
+
+### Agrupando tabelas: funções do grupo ```join```
+
+Se você tem alguma experiência em linguagem SQL para banco de dados, irá compreender facilmente o uso do grupo de funções **join**. Veremos aqui as funções ```left_join()```, ```right_join()```, ```inner_join()``` e ```anti_join()```.
+
+Considere as duas tabelas abaixo que podem ser acessadas em <a href="https://github.com/FCopf/estatistica-livro/blob/master/datasets/Regiao.csv" target="_blank">Regiao.csv</a> e <a href="https://github.com/FCopf/estatistica-livro/blob/master/datasets/Habitat.csv" target="_blank">Habitat.csv</a>
+
+```{r, message=FALSE, echo=FALSE}
+regiao <- read_csv("datasets/Regiao.csv")
+habitat <- read_csv("datasets/Habitat.csv")
+regiao
+habitat
+```
+
+```{r, message=FALSE, eval=FALSE}
+regiao <- read_csv("C:/seu_caminho/IntroR/Regiao.csv")
+regiao
+```
+
+```{r, message=FALSE, eval=FALSE}
+habitat <- read_csv("C:/seu_caminho/IntroR/Habitat.csv")
+habitat
+```
+
+A tabela ```regiao```, contém informações sobre alguns o bacia hidrográfica, á área da bacia e o múnicípio de alguns riachos da região litorânea do estado de São Paulo. A tabela ```trecho```, contém informações sobre a largura e profundidades destes riachos. Alguns riachos são coumuns às duas tabelas, enquanto outros ocorrem somente em uma ou em outra tabela. Sabendo que a coluna ```Riacho``` (R1, R2, R3,....R13) se referem ao mesmo ponto de amostragem, podemos utilizá-la para **combinar** as informações das duas tabelas.
+
+#### Função ```left_join()```
+Retorna todas as linhas da tabela à **esquerda** as as colunas das duas tabelas. Linhas sem correspondência na tabela da direita terão valores de ```NA```. Se houver várias correspondências, todas as combinações serão retornadas.
+
+```{r, message = FALSE}
+regiao %>% left_join(y = habitat)
+```
+
+
+Veja que **todas** as linhas da tabela ```regiao``` estão presentes. Foram adicionadas a elas as informações de ```Altitude```, ```Largura``` e ```Profundidade```, somente para os riachos que também estavam presentes na tabela ```habitat```.
+
+#### Função ```right_join()```
+
+Retorna todas as linhas da tabela à **direita** as as colunas das duas tabelas. Linhas sem correspondência na tabela da esquerda terão valores de ```NA```. Se houver várias correspondências, todas as combinações serão retornadas.
+
+```{r, message = FALSE}
+regiao %>% right_join(y = habitat)
+```
+
+Note que a coluna de ```R11``` contém ```NA``` nas colunas ```Bacia``` e ```Município```, pois este riacho não está presente na tabela ```regiao```.
+
+#### Função ```inner_join()```
+
+Resgata apenas as linhas coincidantes a **ambas** as tabelas.
+
+```{r, eval=FALSE}
+regiao %>% inner_join(y = habitat)
+```
+
+#### Função ```anti_join()```
+
+Retorna todas as linhas da tabela à esquerda em que existem correspondências com a de direita. Retorna todas as colunas de ambas. Se houver várias correspondências, todas as combinações serão retornadas. Testes os comandos abaixo.
+
+```{r, eval=FALSE}
+regiao %>% anti_join(y = habitat)
+```
+
+```{r, eval=FALSE}
+habitat %>% anti_join(y = regiao)
+```
+
+#### Função ```full_join()```
+
+Retorna todas as linhas e colunas das duas tabelas. Nas células em que não houver valores correspondentes, retorna ```NA``` na posição faltante.
+
+```{r, eval=FALSE}
+regiao %>% full_join(y = habitat)
+```
+
+```{r, eval=FALSE}
+habitat %>% semi_join(y = regiao)
+```
+
+### Criando e modificando colunas: função ```mutate()```
+
+Voltemos à base de dados Doubs river.
+
+```{r}
+library(ade4)
+data(doubs)
+ambiente <- doubs$env
+head(ambiente)
+```
+
+Veja que a coluna pH está dada em ph $\times$ 10. Vamos retornar à escala unitária.
+
+```{r}
+ambiente %>% 
+  mutate(pH = pH/10)
+```
+
+Vamos agora criar uma variavel categórica ```pH_cat``` com os níveis ``` Elevado```  se maior ou igual a 8 e ``` Neutro```  caso contrátio.
+
+```{r, eval=FALSE}
+ambiente %>% 
+  mutate(pH = pH/10) %>% 
+  mutate(pH_cat = ifelse(pH < 8, yes = "Neutro", no = "Elevado"))
+```
+
+A nova variável está no final da tabela. Vamos colocá-la logo após a coluna ```pH```
+
+```{r, eval=FALSE}
+ambiente %>% 
+  mutate(pH = pH/10) %>% 
+  mutate(pH_cat = ifelse(pH < 8, yes = "Neutro", no = "Elevado"), .after = pH)
+```
+
+### Unindo colunas: função ```unite()```
+
+Todas as funções vistas acima neste capítulo são do pacote ```dplyr```. A função ```unite() é do pacote ```tidyr``` e permite unir duas colunas. Para isto, vamos retornar à tabela Iris e selecionar algumas linhas para exemplificar a união de colunas.
+
+```{r}
+iris2 <- iris %>% filter(Sepal.Length > 5.5 & Sepal.Length < 6.1)
+iris2
+```
+
+Vamos criar uma nova coluna ```Genus``` e uní-la às coluna ```Species```.
+
+```{r}
+iris2 %>% 
+  mutate(Genus = rep("Iris", times = nrow(iris2)), .before = Species)
+```
+
+```{r}
+iris3 <- iris2 %>% 
+  mutate(Genus = rep("Iris", times = nrow(iris2)), .before = Species) %>% 
+  unite(col = scientic_name, Genus, Species, sep = " ")
+iris3
+```
+
+*Observação*: a função ```unite()``` ***exclui** as colunas que foram unificadas da tabela.
+
+### Reformatando tabelas: funções ```spread()``` e ```gather()```
+
+Importe a tabela ```HubbardBrook.csv``` com dados anuais de vazão e precipitação em dois riachos de áreas desmatadas e referência. Os dados foram retirados de [tiee.esa.org](https://tiee.esa.org/vol/v1/data_sets/hubbard/hubbard_overview.html) e podem ser obtidos em <a href="https://github.com/FCopf/estatistica-livro/blob/master/datasets/HubbardBrook.csv" target="_blank">HubbardBrook.csv</a>.
+
+```{r, echo=FALSE, message=FALSE}
+stream <- read_csv("datasets/HubbardBrook.csv")
+stream
+```
+
+```{r, eval=FALSE, message=FALSE}
+stream <- read_csv("C:/seu_caminho/IntroR/HubbardBrook.csv")
+stream
+```
+
+A função ```spread()``` reorganiza dados do formato longo para o formato largo. Vamos vazer isto abaixo somente para a variável ```Flow``` e excluindo ```Precipitation```.
+
+```{r}
+stream_largo <- stream %>% 
+  select(-Precipitation) %>% 
+  spread(key = Treatment, value = Flow)
+stream_largo
+```
+
+Enquanto a função ```gather()``` faz o caminho reverso.
+
+```{r}
+stream_longo <- stream_largo %>% 
+  gather(key = Desmatamento, value = Flow, -Year)
+stream_longo
+```
+
+```{r, echo=FALSE}
+rm(list = ls())
+```

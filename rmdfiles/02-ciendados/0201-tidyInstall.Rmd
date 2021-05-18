@@ -1,0 +1,56 @@
+# Os pacotes em ```tidyverse``` {#tidy}
+
+A Ciência de Dados, como chamada atualmente, passa por uma coleção de ações relacionadas à importação de dados, formatação, padronização de informações, visualização, modelagem e comunicação dos resultados. Ainda que estes processos sejam conhecidos e aplicados por profissionais de diferentes áreas na academia ou no mercado, o uso cada vez mais recorrente do termo **Ciência de Dados** impulsionou a construção de ferramentas em diferentes linguagems de programação para integrar estes processos de forma coesa. No R, o pacote que trás esta filosofia em sua estrutura é o ```tidyverse```. O  ```tidyverse``` na realidade, agrega um *conjunto de pacotes* que funcionam de maneira integrada. Atualmente (versão ```r installed.versions("tidyverse")``` em ```r Sys.Date()```) estão incorporados no ```tidyverse``` os pacotes:
+
+- ```readr```: importação de dados
+- ```dplyr```: manipulação de dados
+- ```tidyr```: organização de dados
+- ```purr```: programaçao funcional
+- ```tibble```: visualização de data frames 
+- ```stringr```: manipulação de texto
+- ```forcats```: manipulação de fatores
+- ```ggplot2```: visualização gráfica
+
+Além destes existem ainda outros  que se integram bem à filosofia do ```tidyverse``` como o ```lubridade``` (manipulação de datas), o ```readxl``` (leitura de arquivos ```.xls``` e ```.xlsx```), ```rvest``` (manipulação na web), o ```rmarkdown``` (formatação de relatórios dinâmicos, apesentações e outros documentos). Não iremos ver exemplos de todos os pacotes, somentes algumas das funções mais úteis. Você pode buscar mais informações sobre cada um deles no site do [tidyverse](https://www.tidyverse.org/packages/). Para uma visão geral de cada pacote, você pode verificar as [Cheatsheets](https://rstudio.com/resources/cheatsheets/) que oferecem um resumo sobre as funções de diversos pacotes.
+
+### Instalando os pacotes ```tidyverse```
+
+Um **pacote** no R, trás um conjunto de funções organizadas ao redor de um problema comum. Você pode instalar um pacote no R de três formas:
+
+- Utilizando o comando ```install.packages("nome_do_pacote")``` que irá buscá-lo no $\texttt{CRAN}$, [Comprehensive R Archive Network](https://cran.r-project.org/);
+- a partir do Github: ```devtools::install_github("nome_do_repositorio/nome_do_pacote")
+- A partir de um arquivo compactado ```.zip``` ou ```tar.gz``` com o comando ```install.packages("C:/seu_diretorio/nome_do_pacote", repos = NULL)```
+
+> Lembre-se ao utilizar a segunda opção que o [devtools](https://cran.r-project.org/web/packages/devtools/index.html) também é um pacote e portanto, deve ser instalado no R. Alguns pacotes não disponíveis no site oficial do $\texttt{CRAN}$, [Comprehensive R Archive Network](https://cran.r-project.org/) podem ser instalados somente por esta opção.
+
+Cada um dos pacotes incorporados no ```tidyverse``` pode ser instalado individualmente. Por exemplo:
+
+```{r, eval=FALSE}
+install.packages("dplyr")
+install.packages("ggplot2")
+```
+
+Entretando, ao instalar o ```tidyverse```, todos são instalados de uma única vez:
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+```
+
+## Carregando os pacotes
+
+Ao iniciar uma seção, você deve sempre carregar os pacotes que irá utilizar. No caso do ```tidyverse```, você pode carregar cada pacote individualmente:
+
+```{r, eval=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+Ou todos de uma única vez:
+
+```{r, eval=FALSE}
+library(tidyverse)
+```
+
+```{r, echo=FALSE}
+rm(list = ls())
+```

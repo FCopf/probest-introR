@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 3 (Básico da) Visualização gráfica: pacote graphics | Introdução ao Ambiente R de Programação</title>
+  <meta name="description" content="Capítulo 3 (Básico da) Visualização gráfica: pacote graphics | Introdução ao Ambiente R de Programação" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 3 (Básico da) Visualização gráfica: pacote graphics | Introdução ao Ambiente R de Programação" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Capítulo 3 (Básico da) Visualização gráfica: pacote graphics | Introdução ao Ambiente R de Programação" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 3 (Básico da) Visualização gráfica: pacote graphics | Introdução ao Ambiente R de Programação" />
+  
+  <meta name="twitter:description" content="Capítulo 3 (Básico da) Visualização gráfica: pacote graphics | Introdução ao Ambiente R de Programação" />
+  
+
+<meta name="author" content="Fabio Cop" />
+<meta name="author" content="fabiocopf@gmail.com" />
+<meta name="author" content="Instituto do Mar, Universidade Federal de São Paulo" />
+
+
+<meta name="date" content="2021-05-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="manipulacao.html"/>
+<link rel="next" href="tidy.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">"Introdução ao Ambiente R de Programação"</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Apresentação</a></li>
+<li class="part"><span><b>I Fundamentos de programação em R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introdução ao programa R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalação-do-r"><i class="fa fa-check"></i><b>1.1</b> Instalação do R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#interface-de-desenvolvimento-ide"><i class="fa fa-check"></i><b>1.2</b> Interface de desenvolvimento (IDE)</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#o-r-para-cálculos-aritméticos"><i class="fa fa-check"></i><b>1.3</b> O R para cálculos aritméticos</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#atribuição-de-valores"><i class="fa fa-check"></i><b>1.4</b> Atribuição de valores</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#estruturas-de-dados"><i class="fa fa-check"></i><b>1.5</b> Estruturas de dados</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#vetores-numéricos"><i class="fa fa-check"></i><b>1.5.1</b> Vetores numéricos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#vetores-alfanuméricos"><i class="fa fa-check"></i><b>1.5.2</b> Vetores alfanuméricos</a></li>
+<li class="chapter" data-level="1.5.3" data-path="intro.html"><a href="intro.html#unindo-vetores-comando-paste"><i class="fa fa-check"></i><b>1.5.3</b> Unindo vetores: comando paste</a></li>
+<li class="chapter" data-level="1.5.4" data-path="intro.html"><a href="intro.html#fatores"><i class="fa fa-check"></i><b>1.5.4</b> Fatores</a></li>
+<li class="chapter" data-level="1.5.5" data-path="intro.html"><a href="intro.html#matrizes"><i class="fa fa-check"></i><b>1.5.5</b> Matrizes</a></li>
+<li class="chapter" data-level="1.5.6" data-path="intro.html"><a href="intro.html#data-frames"><i class="fa fa-check"></i><b>1.5.6</b> Data frames</a></li>
+<li class="chapter" data-level="1.5.7" data-path="intro.html"><a href="intro.html#listas"><i class="fa fa-check"></i><b>1.5.7</b> Listas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#operadores-relacionais"><i class="fa fa-check"></i><b>1.6</b> Operadores relacionais</a></li>
+<li class="chapter" data-level="1.7" data-path="intro.html"><a href="intro.html#operadores-lógicos"><i class="fa fa-check"></i><b>1.7</b> Operadores lógicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manipulacao.html"><a href="manipulacao.html"><i class="fa fa-check"></i><b>2</b> (Básico da) Manipulação de data frames</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manipulacao.html"><a href="manipulacao.html#iniciando-uma-seção-de-trabalho"><i class="fa fa-check"></i><b>2.1</b> Iniciando uma seção de trabalho</a></li>
+<li class="chapter" data-level="2.2" data-path="manipulacao.html"><a href="manipulacao.html#importando-arquivos-.csv"><i class="fa fa-check"></i><b>2.2</b> Importando arquivos <code>.csv</code></a></li>
+<li class="chapter" data-level="2.3" data-path="manipulacao.html"><a href="manipulacao.html#seleção-de-linhas-e-colunas-em-data-frames"><i class="fa fa-check"></i><b>2.3</b> Seleção de linhas e colunas em data frames</a></li>
+<li class="chapter" data-level="2.4" data-path="manipulacao.html"><a href="manipulacao.html#adicionando-novas-colunas-a-um-data-frame"><i class="fa fa-check"></i><b>2.4</b> Adicionando novas colunas a um data frame</a></li>
+<li class="chapter" data-level="2.5" data-path="manipulacao.html"><a href="manipulacao.html#aplicando-uma-função-às-linhas-ou-colunas-de-um-data-frame"><i class="fa fa-check"></i><b>2.5</b> Aplicando uma função às linhas ou colunas de um data frame</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manipulacao.html"><a href="manipulacao.html#família-de-funções-apply"><i class="fa fa-check"></i><b>2.5.1</b> Família de funções <code>apply</code></a></li>
+<li class="chapter" data-level="2.5.2" data-path="manipulacao.html"><a href="manipulacao.html#função-aggregate"><i class="fa fa-check"></i><b>2.5.2</b> Função <code>aggregate</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manipulacao.html"><a href="manipulacao.html#exportando-um-data-frame"><i class="fa fa-check"></i><b>2.6</b> Exportando um data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualizacao.html"><a href="visualizacao.html"><i class="fa fa-check"></i><b>3</b> (Básico da) Visualização gráfica: pacote <code>graphics</code></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualizacao.html"><a href="visualizacao.html#doubs-river-dataset"><i class="fa fa-check"></i><b>3.1</b> Doubs river dataset</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visualizacao.html"><a href="visualizacao.html#instalando-o-pacote-ade4-e-carregando-os-dados"><i class="fa fa-check"></i><b>3.1.1</b> Instalando o pacote <code>ade4</code> e carregando os dados</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visualizacao.html"><a href="visualizacao.html#descrevendo-os-padrões-de-uma-variável"><i class="fa fa-check"></i><b>3.2</b> Descrevendo os padrões de uma variável</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-barras"><i class="fa fa-check"></i><b>3.2.1</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="3.2.2" data-path="visualizacao.html"><a href="visualizacao.html#histograma"><i class="fa fa-check"></i><b>3.2.2</b> Histograma</a></li>
+<li class="chapter" data-level="3.2.3" data-path="visualizacao.html"><a href="visualizacao.html#boxplot"><i class="fa fa-check"></i><b>3.2.3</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="visualizacao.html"><a href="visualizacao.html#visualizando-associações-entre-duas-variáveis"><i class="fa fa-check"></i><b>3.3</b> Visualizando associações entre duas variáveis</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-barras-1"><i class="fa fa-check"></i><b>3.3.1</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="3.3.2" data-path="visualizacao.html"><a href="visualizacao.html#boxplot-1"><i class="fa fa-check"></i><b>3.3.2</b> Boxplot</a></li>
+<li class="chapter" data-level="3.3.3" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-dispersão"><i class="fa fa-check"></i><b>3.3.3</b> Gráfico de dispersão</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="visualizacao.html"><a href="visualizacao.html#compreendendo-o-ambiente-por-meio-de-suas-variáveis"><i class="fa fa-check"></i><b>3.4</b> Compreendendo o ambiente por meio de suas variáveis</a></li>
+<li class="chapter" data-level="3.5" data-path="visualizacao.html"><a href="visualizacao.html#mais-um-comentário-sobre-formatação-gráfica-no-r"><i class="fa fa-check"></i><b>3.5</b> Mais um comentário sobre formatação gráfica no R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="visualizacao.html"><a href="visualizacao.html#outros-argumentos"><i class="fa fa-check"></i><b>3.5.1</b> Outros argumentos</a></li>
+<li class="chapter" data-level="3.5.2" data-path="visualizacao.html"><a href="visualizacao.html#figuras-compostas"><i class="fa fa-check"></i><b>3.5.2</b> Figuras compostas</a></li>
+<li class="chapter" data-level="3.5.3" data-path="visualizacao.html"><a href="visualizacao.html#exportando-figuras-com-as-funções-png-tiff-jpeg-e-bmp"><i class="fa fa-check"></i><b>3.5.3</b> Exportando figuras com as funções <code>png</code>, <code>tiff</code>, <code>jpeg</code> e <code>bmp</code></a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Uma coleção integrada de pacotes para ciência de dados</b></span></li>
+<li class="chapter" data-level="4" data-path="tidy.html"><a href="tidy.html"><i class="fa fa-check"></i><b>4</b> Os pacotes em <code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="tidy.html"><a href="tidy.html#instalando-os-pacotes-tidyverse"><i class="fa fa-check"></i><b>4.0.1</b> Instalando os pacotes <code>tidyverse</code></a></li>
+<li class="chapter" data-level="4.1" data-path="tidy.html"><a href="tidy.html#carregando-os-pacotes"><i class="fa fa-check"></i><b>4.1</b> Carregando os pacotes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="importe.html"><a href="importe.html"><i class="fa fa-check"></i><b>5</b> Importando/Exportando dados</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="importe.html"><a href="importe.html#ajustando-o-diretório-de-trabalho"><i class="fa fa-check"></i><b>5.1</b> Ajustando o diretório de trabalho</a></li>
+<li class="chapter" data-level="5.2" data-path="importe.html"><a href="importe.html#importando-dados-em-arquvos-de-texto"><i class="fa fa-check"></i><b>5.2</b> Importando dados em arquvos de texto</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>6</b> Operador Pipe</a></li>
+<li class="chapter" data-level="7" data-path="format.html"><a href="format.html"><i class="fa fa-check"></i><b>7</b> Manipulação e formatação de dados</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="format.html"><a href="format.html#transformação-de-dados-os-pacotes-dplyr-e-tidyr"><i class="fa fa-check"></i><b>7.1</b> Transformação de dados: os pacotes <code>dplyr</code> e <code>tidyr</code></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="format.html"><a href="format.html#ordenando-as-linhas-funções-arrange-e-desc"><i class="fa fa-check"></i><b>7.1.1</b> Ordenando as linhas: funções <code>arrange()</code> e <code>desc()</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="format.html"><a href="format.html#filtrando-linhas-função-filter"><i class="fa fa-check"></i><b>7.1.2</b> Filtrando linhas: função <code>filter()</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="format.html"><a href="format.html#selecionando-colunas-função-select"><i class="fa fa-check"></i><b>7.1.3</b> Selecionando colunas: função <code>select()</code></a></li>
+<li class="chapter" data-level="7.1.4" data-path="format.html"><a href="format.html#agrupando-tabelas-funções-do-grupo-join"><i class="fa fa-check"></i><b>7.1.4</b> Agrupando tabelas: funções do grupo <code>join</code></a></li>
+<li class="chapter" data-level="7.1.5" data-path="format.html"><a href="format.html#criando-e-modificando-colunas-função-mutate"><i class="fa fa-check"></i><b>7.1.5</b> Criando e modificando colunas: função <code>mutate()</code></a></li>
+<li class="chapter" data-level="7.1.6" data-path="format.html"><a href="format.html#unindo-colunas-função-unite"><i class="fa fa-check"></i><b>7.1.6</b> Unindo colunas: função <code>unite()</code></a></li>
+<li class="chapter" data-level="7.1.7" data-path="format.html"><a href="format.html#reformatando-tabelas-funções-spread-e-gather"><i class="fa fa-check"></i><b>7.1.7</b> Reformatando tabelas: funções <code>spread()</code> e <code>gather()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>8</b> Um gráfico em camadas: o pacote <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ggplot2.html"><a href="ggplot2.html#hubbard-brook-stream-flow"><i class="fa fa-check"></i><b>8.1</b> Hubbard Brook stream flow</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="ggplot2.html"><a href="ggplot2.html#entendendo-a-gramática-do-ggplot"><i class="fa fa-check"></i><b>8.1.1</b> Entendendo a gramática do <code>ggplot</code></a></li>
+<li class="chapter" data-level="8.1.2" data-path="ggplot2.html"><a href="ggplot2.html#outras-geometrias-gráficas"><i class="fa fa-check"></i><b>8.1.2</b> Outras <em>Geometrias</em> gráficas</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ggplot2.html"><a href="ggplot2.html#gáfico-de-dispersão"><i class="fa fa-check"></i><b>8.2</b> Gáfico de dispersão</a></li>
+<li class="chapter" data-level="8.3" data-path="ggplot2.html"><a href="ggplot2.html#boxplot-2"><i class="fa fa-check"></i><b>8.3</b> Boxplot</a></li>
+<li class="chapter" data-level="8.4" data-path="ggplot2.html"><a href="ggplot2.html#gráfico-de-linhas"><i class="fa fa-check"></i><b>8.4</b> Gráfico de linhas</a></li>
+<li class="chapter" data-level="8.5" data-path="ggplot2.html"><a href="ggplot2.html#gráfico-de-barras-2"><i class="fa fa-check"></i><b>8.5</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="8.6" data-path="ggplot2.html"><a href="ggplot2.html#temas-no-ggplot2"><i class="fa fa-check"></i><b>8.6</b> Temas no <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.7" data-path="ggplot2.html"><a href="ggplot2.html#salvando-uma-figura-gerada-pelo-gglot2."><i class="fa fa-check"></i><b>8.7</b> Salvando uma figura gerada pelo <code>gglot2</code>.</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introdução ao Ambiente R de Programação</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="visualizacao" class="section level1" number="3">
+<h1><span class="header-section-number">Capítulo 3</span> (Básico da) Visualização gráfica: pacote <code>graphics</code></h1>
+<p>A visualização gráfica consiste em mostrar visualmente ou padrões de <em>distribuição</em> de uma variável ou padrões de a <em>associação</em> entre duas ou mais variáveis. Os tipos de gráficos a serem utilizados depende basicamente do tipo de variável (ex. categórica ou numérica) e do número de variáveis envolvidas. Temos os gráficos <strong>univariados</strong> quando a visualização envolve uma única variável, gráfios <strong>bivariados</strong> quando a visualização envolve duas variáveis e gráficos <strong>multivariados</strong> que buscam expressar o padrão de associação entre mais de duas variáveis. Deixaremos os gráficos multivariados para outro momento e veremos aqui os tipos básicos para descrever padrões <strong>uni</strong> e <strong>bivariados</strong>.</p>
+<p>As funções gráficas apresentadas neste tópico estão todas disponíveis no pacote <code>graphics</code>, que se inclui na lista dos pacotes <strong>previamente</strong> instalados no R. Não é necessário portanto preocupar-se com nenhuma instalação adicional. Estas funções possibilitam elevado controle sobre cada um dos elementos gráficos (fontes, tamanhos, cores), porém a custo de maior complexidade se temos a intensão de gerar figuras complexas. Vale ressaltar ainda que mesmo utilizando muitas nomenclaturas compatíveis para o controle de eixos, títulos, tamanho de fonte, estas funções nem sempre usam argumentos coesos entre os tipos gráficos, o que pode tornar a curva de aprendizado mais demorada. Por outro lado, estas funções fornecem <strong>conhecimentos básicos</strong> sobre a estrutura gráfica no R, permitindo resolver de forma rápida e simples muitas situações que encontramos no dia-a-dia da análise exploratória. Na próxima seção iremos tratar de outro pacote gráfico (<code>ggplot2</code>) que possui elevada capacidade para gerar estruturas complexas de imagem, utilizando uma estrutura mais coesa de manipulação gráfica. Também veremos novamente vários tipos gráficos no capítulo <a href="format.html#format">7</a> quando formos falar de Estatística Descritiva.</p>
+<div id="doubs-river-dataset" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Doubs river dataset</h2>
+<p>Para demonstrar algumas ferramentas gráficas, vamos utilizar um conjunto de dados já disponível na base de dados do R chamados <em>Doubs River data</em>. Na realidade, já analisamos parte deste conjunto de dados no capítulo <a href="manipulacao.html#manipulacao">2</a>, quando importamos o arquivo <code>doubs_environment.csv</code>. Deste ponto em diante, vamos utilizar o conjunto dados completo que está disponível no pacote <code>ade4</code> <span class="citation">(<a href="#ref-dray2015ade" role="doc-biblioref">Dray, Dufour, and Thioulouse 2015</a>)</span>.</p>
+<p>Este conjunto de dados resulta da tese de doutorado de Verneaux <span class="citation">(<a href="#ref-Verneaux1973" role="doc-biblioref">Verneaux 1973</a>)</span>. O texto a seguir foi traduzido do site do excelente site de <strong>David Zelený</strong> sobre análise de dados multivariados em Ecologia de Comunidades ( <a href="https://www.davidzeleny.net/anadat-r/doku.php/en:data:doubs">www.davidzeleny.net</a>).</p>
+<p>Verneaux <span class="citation">(<a href="#ref-Verneaux1973" role="doc-biblioref">Verneaux 1973</a>)</span> propôs o uso de espécies de peixes para caracterizar zonas ecológicas ao longo de rios e riachos europeus. O autor mostrou que as comunidades de peixes eram bons indicadores biológicos desses corpos d’água. Partindo da foz até a cabeceira, Verneaux propôs uma tipologia em quatro zonas, nomeadas a partir da predominância de uma dada espécie de peixe: <strong>trout zone</strong>, <strong>grayling zone</strong>, <strong>barbel zone</strong> e <strong>bream zone</strong>. As condições ecológicas correspondentes nestas zonas variam desde águas relativamente bem oxigenadas e oligotróficas até águas eutróficas e desprovidas de oxigênio.</p>
+<p>Os dados foram coletados em 30 localidades ao longo do <a href="https://pt.wikipedia.org/wiki/Rio_Doubs">rio Doubs</a>, próximo à fronteira da França e Suíça. O conjunto de dados que você irá importar consiste em uma lista de 4 elementos:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>$env</code>: um data frame com 30 linhas por 11 colunas, em que as linhas representam os locais de amostragem da cabeceira a foz do riacho e as colunas representam variáveis ambientais relacionadas à hidrologia, geomorfologia e química do rio.</p></li>
+<li><p><code>$fish</code>: um data frame com 30 linhas por 27 colunas, em que as linhas representam os mesmo locais de amostragem e a cada coluna as abundâncias das 27 espécies de peixes capturadas.</p></li>
+<li><p><code>$xy</code>: um data frame com 30 linhas por 2 colunas. As linhas novamente são os locais de amostragem e as colunas representam as coordenadas geográficas de cada ponto de amostragem.</p></li>
+<li><p><code>$species</code>: um data frame com 27 linhas por 4 colunas. As linhas representam cada uma das 27 espécies capturadas e as colunas representam seus nomes científicos, nomes populares em francês, em inglês e um código abreviado.</p></li>
+</ol>
+<div id="instalando-o-pacote-ade4-e-carregando-os-dados" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Instalando o pacote <code>ade4</code> e carregando os dados</h3>
+<p>Caso ainda não tenha feito, instale o pacote <code>ade4</code> através do comando:</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="visualizacao.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ade4&quot;</span>)</span></code></pre></div>
+<p>Feito isto, carregue o pacote:</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="visualizacao.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ade4)</span></code></pre></div>
+<p>O conjunto de dados <code>doubs</code></p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="visualizacao.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(doubs)</span></code></pre></div>
+<p>Veja o formato em lista destes dados:</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="visualizacao.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(doubs)</span>
+<span id="cb248-2"><a href="visualizacao.html#cb248-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(doubs)</span></code></pre></div>
+<p>E leia a descrição do conjunto de dados para entender melhor nossas discussões a frente.</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="visualizacao.html#cb249-1" aria-hidden="true" tabindex="-1"></a>?doubs</span></code></pre></div>
+<p>Diversos autores em ecologia de comunidades tem utilizado os <em>Doubs dataset</em> para exemplificar métodos e modelos de análise de dados, sobretudo multivariados. Inicialmente, vamos extrair os dados ambientais para um novo <code>data.frame</code> que iremos utilizar nas análises gráficas:</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="visualizacao.html#cb250-1" aria-hidden="true" tabindex="-1"></a>ambiente <span class="ot">&lt;-</span> doubs<span class="sc">$</span>env</span></code></pre></div>
+<p>Baseados em Borcard et al. <span class="citation">(<a href="#ref-borcard2018numerical" role="doc-biblioref">Borcard, Gillet, and Legendre 2018</a>)</span>, vamos adicionar a este data frame uma nova variável categórica denominada <code>secao</code> com quatro níveis.</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="visualizacao.html#cb251-1" aria-hidden="true" tabindex="-1"></a>ambiente<span class="sc">$</span>secao <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;Seção 1&quot;</span>, <span class="dv">16</span>), <span class="fu">rep</span>(<span class="st">&quot;Seção 4&quot;</span>, <span class="dv">14</span>))</span>
+<span id="cb251-2"><a href="visualizacao.html#cb251-2" aria-hidden="true" tabindex="-1"></a>ambiente<span class="sc">$</span>secao[<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">17</span>)] <span class="ot">&lt;-</span> <span class="st">&quot;Seção 2&quot;</span></span>
+<span id="cb251-3"><a href="visualizacao.html#cb251-3" aria-hidden="true" tabindex="-1"></a>ambiente<span class="sc">$</span>secao[<span class="dv">23</span><span class="sc">:</span><span class="dv">25</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Seção 3&quot;</span></span>
+<span id="cb251-4"><a href="visualizacao.html#cb251-4" aria-hidden="true" tabindex="-1"></a>ambiente<span class="sc">$</span>secao <span class="ot">&lt;-</span> <span class="fu">factor</span>(ambiente<span class="sc">$</span>secao)</span></code></pre></div>
+<p>Outra variável categórica, indicando três níveis de concentração de oxigênio em cada ponto.</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="visualizacao.html#cb252-1" aria-hidden="true" tabindex="-1"></a>ambiente<span class="sc">$</span>trofia <span class="ot">&lt;-</span> <span class="fu">cut</span>(ambiente<span class="sc">$</span>oxy, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">80</span>, <span class="dv">109</span>, <span class="dv">124</span>), </span>
+<span id="cb252-2"><a href="visualizacao.html#cb252-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Pobre&quot;</span>, <span class="st">&quot;Médio&quot;</span>, <span class="st">&quot;Saturado&quot;</span>))</span>
+<span id="cb252-3"><a href="visualizacao.html#cb252-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ambiente, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    dfs alt   slo  flo pH har pho nit amm oxy bdo   secao   trofia
+## 1    3 934 6.176   84 79  45   1  20   0 122  27 Seção 1 Saturado
+## 2   22 932 3.434  100 80  40   2  20  10 103  19 Seção 1    Médio
+## 3  102 914 3.638  180 83  52   5  22   5 105  35 Seção 1    Médio
+## 4  185 854 3.497  253 80  72  10  21   0 110  13 Seção 1 Saturado
+## 5  215 849 3.178  264 81  84  38  52  20  80  62 Seção 2    Pobre
+## 6  324 846 3.497  286 79  60  20  15   0 102  53 Seção 1    Médio
+## 7  268 841 4.205  400 81  88   7  15   0 111  22 Seção 1 Saturado
+## 8  491 792 3.258  130 81  94  20  41  12  70  81 Seção 1    Pobre
+## 9  705 752 2.565  480 80  90  30  82  12  72  52 Seção 2    Pobre
+## 10 990 617 4.605 1000 77  82   6  75   1 100  43 Seção 1    Médio</code></pre>
+</div>
+</div>
+<div id="descrevendo-os-padrões-de-uma-variável" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Descrevendo os padrões de uma variável</h2>
+<div id="gráfico-de-barras" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Gráfico de barras</h3>
+<p>Um gráfico de barras é utilizado para verificar a contagem de cada nível de uma variável. Portanto, necessariamente deve ser aplicado a uma <em>variável categórica</em>. Vamos fazer um gráfico de barras para a variável <code>trofia</code></p>
+<p>Montamos uma tabela de frequencia:</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="visualizacao.html#cb254-1" aria-hidden="true" tabindex="-1"></a>tab1 <span class="ot">&lt;-</span> <span class="fu">table</span>(ambiente<span class="sc">$</span>trofia)</span>
+<span id="cb254-2"><a href="visualizacao.html#cb254-2" aria-hidden="true" tabindex="-1"></a>tab1</span></code></pre></div>
+<pre><code>## 
+##    Pobre    Médio Saturado 
+##        8       14        8</code></pre>
+<p>E em seguida mostramos esta tabela em um gráfico de barras:</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="visualizacao.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(tab1)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-105-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Melhorando a formatação gráfica:</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="visualizacao.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(tab1,</span>
+<span id="cb257-2"><a href="visualizacao.html#cb257-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Concentração de oxigênio&quot;</span>,</span>
+<span id="cb257-3"><a href="visualizacao.html#cb257-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Frequência&quot;</span>,</span>
+<span id="cb257-4"><a href="visualizacao.html#cb257-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">18</span>), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb257-5"><a href="visualizacao.html#cb257-5" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-106-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="histograma" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Histograma</h3>
+<p>Um histograma é a forma mais direta de avaliarmos o padrão de distribuição de uma variável quantitativa. Um histograma é construído a partir da divisão de uma variável em <em>intervalos de classe</em> e contando o número de classes dentro deste intervalo.</p>
+<p>Veja o histograma abaixo para a oxy que expressa a concentração de oxigênio em mg/l <span class="math inline">\(\times\)</span> 10.</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="visualizacao.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ambiente<span class="sc">$</span>oxy)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-108-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>A figura mostra por exemplo que existe 1 seção com concentração entre 40 e 50 mg/l <span class="math inline">\(\times\)</span> 10, e 2 seções com concentração entre 90 e 100 mg/l <span class="math inline">\(\times\)</span> 10. Verifique quais são estes veículos com o comando abaixo:</p>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="visualizacao.html#cb259-1" aria-hidden="true" tabindex="-1"></a>ambiente[<span class="fu">order</span>(ambiente<span class="sc">$</span>oxy),]</span></code></pre></div>
+<pre><code>##     dfs alt   slo  flo pH har pho nit amm oxy bdo   secao   trofia
+## 25 3278 231 1.792 3870 79 100 422 620 180  41 167 Seção 3    Pobre
+## 24 3147 241 1.386 2976 80  99 140 250  60  52 123 Seção 3    Pobre
+## 26 3579 214 1.792 3910 79  94 143 300  30  62  89 Seção 4    Pobre
+## 23 3043 246 2.565 2880 81  97 260 350 115  63 164 Seção 3    Pobre
+## 8   491 792 3.258  130 81  94  20  41  12  70  81 Seção 1    Pobre
+## 9   705 752 2.565  480 80  90  30  82  12  72  52 Seção 2    Pobre
+## 27 3732 206 2.565 3960 81  90  58 300  26  72  63 Seção 4    Pobre
+## 5   215 849 3.178  264 81  84  38  52  20  80  62 Seção 2    Pobre
+## 28 3947 195 1.386 4320 83 100  74 400  30  81  45 Seção 4    Médio
+## 30 4530 172 1.099 6900 82 109  65 160  10  82  44 Seção 4    Médio
+## 21 2812 262 2.398 2720 79  85  20 220  10  90  41 Seção 4    Médio
+## 29 4220 183 1.946 6770 78 110  45 162  10  90  42 Seção 4    Médio
+## 22 2940 254 2.708 2790 81  88  20 162   7  91  48 Seção 4    Médio
+## 10  990 617 4.605 1000 77  82   6  75   1 100  43 Seção 1    Médio
+## 6   324 846 3.497  286 79  60  20  15   0 102  53 Seção 1    Médio
+## 17 1985 348 1.792 2430 80  92  20 250  20 102  46 Seção 2    Médio
+## 2    22 932 3.434  100 80  40   2  20  10 103  19 Seção 1    Médio
+## 16 1859 375 3.045 1610 80  88  20 200   5 103  27 Seção 1    Médio
+## 18 2110 332 2.197 2500 80  90  50 220  20 103  28 Seção 4    Médio
+## 20 2477 286 2.197 2680 80  86  30 300  30 103  28 Seção 4    Médio
+## 3   102 914 3.638  180 83  52   5  22   5 105  35 Seção 1    Médio
+## 19 2246 310 1.792 2590 81  84  60 220  15 106  33 Seção 4    Médio
+## 4   185 854 3.497  253 80  72  10  21   0 110  13 Seção 1 Saturado
+## 7   268 841 4.205  400 81  88   7  15   0 111  22 Seção 1 Saturado
+## 11 1234 483 3.738 1990 81  96  30 160   0 115  27 Seção 1 Saturado
+## 15 1645 415 1.792 2300 86  86  40 100   0 117  21 Seção 1 Saturado
+## 1     3 934 6.176   84 79  45   1  20   0 122  27 Seção 1 Saturado
+## 12 1324 477 2.833 2000 79  86   4  50   0 122  30 Seção 1 Saturado
+## 14 1522 434 2.565 2120 83  98  27 123   0 123  38 Seção 1 Saturado
+## 13 1436 450 3.091 2110 81  98   6  52   0 124  24 Seção 1 Saturado</code></pre>
+<p>Em um histograma, a escolha do intervalo de classes determina o formato exato do gráfico. No exemplo acima, a escolha foi feita automaticamente. No entanto, podemos definir esplicitamente o intervalo desejado utilizando o argumento <code>breaks</code> conforme abaixo:</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="visualizacao.html#cb261-1" aria-hidden="true" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">40</span>, <span class="dv">140</span>, <span class="at">by =</span> <span class="dv">20</span>)</span>
+<span id="cb261-2"><a href="visualizacao.html#cb261-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ambiente<span class="sc">$</span>oxy, <span class="at">breaks =</span> classes)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-110-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Aqui fizemos a divisão em intervalos de tamanho 20, iniciando em 40 e terminando em 140. A escolha do tamanho das classes é de certa forma arbitrária e definida para que o figura evidencie da melhor forma possível o padrão de distribuição dos dados.</p>
+</div>
+<div id="boxplot" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Boxplot</h3>
+<p>Boxplots oferecem um <em>resumo gráfico</em> da distribuição de uma variável quantitativa. Abaixo veja um boxplot da variável oxy.</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="visualizacao.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(ambiente<span class="sc">$</span>oxy)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-111-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>No boxplot, a linha do meio representa a <strong>mediana</strong> dos dados, os limitres das caixas representam o <span class="math inline">\(1^o\)</span> e <span class="math inline">\(3^o\)</span> percentis e as linhas os pontos mínimo e máximo. Podemos ver quais são estes valores com o comando:</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="visualizacao.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(ambiente<span class="sc">$</span>oxy, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>##     0%    25%    50%    75%   100% 
+##  41.00  80.25 102.00 109.00 124.00</code></pre>
+</div>
+</div>
+<div id="visualizando-associações-entre-duas-variáveis" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Visualizando associações entre duas variáveis</h2>
+<div id="gráfico-de-barras-1" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Gráfico de barras</h3>
+<p>Passando aos gráficos bi-variados, vamos criar um gráfico de barras combinando as variáveis categóricas <code>secao</code> e <code>trofia</code>. Como fizemos anteriormente, montamos uma tabela de frequência, porpém neste caso combinando as duas variáveis.</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="visualizacao.html#cb265-1" aria-hidden="true" tabindex="-1"></a>tab2 <span class="ot">&lt;-</span> <span class="fu">table</span>(ambiente[,<span class="fu">c</span>(<span class="st">&quot;secao&quot;</span>, <span class="st">&quot;trofia&quot;</span>)])</span>
+<span id="cb265-2"><a href="visualizacao.html#cb265-2" aria-hidden="true" tabindex="-1"></a>tab2</span></code></pre></div>
+<pre><code>##          trofia
+## secao     Pobre Médio Saturado
+##   Seção 1     1     5        8
+##   Seção 2     2     1        0
+##   Seção 3     3     0        0
+##   Seção 4     2     8        0</code></pre>
+<p>Neste caso, podemos fazer gráficos de barras de quatro formas distintas:</p>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="visualizacao.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="at">mat =</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb267-2"><a href="visualizacao.html#cb267-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(tab2, <span class="at">legend =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb267-3"><a href="visualizacao.html#cb267-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(tab2, <span class="at">legend =</span> <span class="cn">TRUE</span>, <span class="at">beside =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb267-4"><a href="visualizacao.html#cb267-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">t</span>(tab2), <span class="at">legend =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb267-5"><a href="visualizacao.html#cb267-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">t</span>(tab2), <span class="at">legend =</span> <span class="cn">TRUE</span>, <span class="at">beside =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-114-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>O comando acima necessita de algumas esplicações.</p>
+<ol style="list-style-type: decimal">
+<li><p>A função <code>layout(mat = matrix(1:4, nrow = 2, ncol = 2, byrow = TRUE))</code> organiza o espaço gráfico em um formato matricial com 2 linhas por 2 colunas, permitindo a inserrção de 4 figuras. O argumento <code>byrow = TRUE</code> define que as figuras serão adicionais linha-a-linha;</p></li>
+<li><p>A expressão <code>t(tab2)</code> tem como resultado <em>tanspor</em> a tabela, o que consequentemente altera a referência da figura. No primeiro caso, a referência é a concentração de oxigêncio e no segundo caso, as seções;</p></li>
+<li><p>O argumento <code>beside = TRUE</code> faz com que todas as barras apareçam lado-a-lado. Caso contrário, cada barra representa uma coluna da matriz <code>tab2</code> ou da sua transposta <code>t(tab2)</code>;</p></li>
+<li><p>Em todos os gráficos foi adicionada uma legenda para permitir a interpretação dos gráficos;</p></li>
+</ol>
+<p>Aqui vale melhorarmos a formatação:</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="visualizacao.html#cb268-1" aria-hidden="true" tabindex="-1"></a>cores <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb268-2"><a href="visualizacao.html#cb268-2" aria-hidden="true" tabindex="-1"></a>limy1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">17</span>)</span>
+<span id="cb268-3"><a href="visualizacao.html#cb268-3" aria-hidden="true" tabindex="-1"></a>limy2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">16</span>)</span>
+<span id="cb268-4"><a href="visualizacao.html#cb268-4" aria-hidden="true" tabindex="-1"></a>legenda <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb268-5"><a href="visualizacao.html#cb268-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-6"><a href="visualizacao.html#cb268-6" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="at">mat =</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb268-7"><a href="visualizacao.html#cb268-7" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(tab2, <span class="at">legend =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> cores, <span class="at">ylim =</span> limy1, </span>
+<span id="cb268-8"><a href="visualizacao.html#cb268-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">args.legend =</span> legenda)</span>
+<span id="cb268-9"><a href="visualizacao.html#cb268-9" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb268-10"><a href="visualizacao.html#cb268-10" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(tab2, <span class="at">legend =</span> <span class="cn">TRUE</span>, <span class="at">beside =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> cores, </span>
+<span id="cb268-11"><a href="visualizacao.html#cb268-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> limy1, <span class="at">args.legend =</span> legenda)</span>
+<span id="cb268-12"><a href="visualizacao.html#cb268-12" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb268-13"><a href="visualizacao.html#cb268-13" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">t</span>(tab2), <span class="at">legend =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> cores, <span class="at">ylim =</span> limy2, </span>
+<span id="cb268-14"><a href="visualizacao.html#cb268-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">args.legend =</span> legenda)</span>
+<span id="cb268-15"><a href="visualizacao.html#cb268-15" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb268-16"><a href="visualizacao.html#cb268-16" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">t</span>(tab2), <span class="at">legend =</span> <span class="cn">TRUE</span>, <span class="at">beside =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> cores, </span>
+<span id="cb268-17"><a href="visualizacao.html#cb268-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> limy2, <span class="at">args.legend =</span> legenda)</span>
+<span id="cb268-18"><a href="visualizacao.html#cb268-18" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-115-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="boxplot-1" class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Boxplot</h3>
+<p>O boxplot é mais utilizado na situação a seguir em que queremos sumarizar uma variável quantitativa para diferentes níveis de uma variável categórica. Para isto, vamos associar a variável oxy à variável secao.</p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="visualizacao.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(oxy <span class="sc">~</span> secao, <span class="at">data =</span> ambiente)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-116-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Vemos que <em>aparentemente</em> os pontos associados ao <code>Seção 1</code> têm maiores concentrações de oxigênio (mediana = NA) e que os pontos associados à <code>Seção 3</code> os menores valores (mediana = 52). É neste tipo de comparação que geralmente estamos interessados ao fazer um boxplot deste tipo.</p>
+<p>Aqui utilizamos uma notação diferente.</p>
+<ol style="list-style-type: decimal">
+<li><p>Ao invés de dizermos explicitamente qual variável está no eixo <code>y</code> e qual está no eixo <code>x</code>, utilizamos o símbolo <code>~</code> para expressar que <code>y</code> <em>depende de</em> <code>x</code>. Esta notação é amplamente utilizada em modelos estatísticos como Regressão e Análise de Variância e está associada aos conceitos de variável <em>dependente</em> (ou <em>reposta</em>, <code>y</code>) e de variável <em>independente</em> (ou <em>preditora</em>, <code>x</code>). Neste caso, então a concentração de oxigênio <em>depende</em> da seção do rio.</p></li>
+<li><p>Ao invés de chamarmos a variável por <code>ambiente$oxy</code>, utilizamos somente o nome da coluna (<code>oxy</code>) e adicionamos o argumento <code>data = ambiente</code> para indicar em qual data frame a função irá buscar as variáveis. Deste ponto em diante iremos utilizar esta notação sempre que possível, para que você se familiarize com sua utilização na prática de ajuste de modelos estatísticos no R.</p></li>
+</ol>
+</div>
+<div id="gráfico-de-dispersão" class="section level3" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Gráfico de dispersão</h3>
+<p>Um gráfico de dispersão mostra a associação entre duas variáveis quantitativas. Vamos verificar a associação entre concentração de nitrato (mg/l <span class="math inline">\(\times\)</span> 100) e a distância da foz (km <span class="math inline">\(\times\)</span> 10). Neste caso, é fundamental definirmos quem serão as variáveis dependentes e independentes. Aqui, faz sentido pensar que a concentração de nitrato varia <strong>em função</strong> da distância da foz e não o contrário.</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="visualizacao.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-117-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Os resultados aqui parecem expressar uma relação esperada em que a concentração de nutrientes aumenta à medida que nos aproximamos da foz de rio e riachos.</p>
+<p>Novamente, vamos aproveitar para falar um pouco sobre formatação gráfica alterando os nomes dos eixos(argumentos <code>xlab</code> e <code>ylab</code>), tipo de ponto (argumento <code>pch</code>).</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="visualizacao.html#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente,</span>
+<span id="cb271-2"><a href="visualizacao.html#cb271-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">bquote</span>(<span class="st">&quot;Vazão média mínima (m&quot;</span> <span class="sc">^</span><span class="dv">3</span><span class="sc">/</span><span class="st">&quot;seg x 100)&quot;</span>),</span>
+<span id="cb271-3"><a href="visualizacao.html#cb271-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">bquote</span>(<span class="st">&quot;Concentração de Nitrato (mg&quot;</span><span class="sc">/</span><span class="st">&quot;l x 100)&quot;</span>),</span>
+<span id="cb271-4"><a href="visualizacao.html#cb271-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span></span>
+<span id="cb271-5"><a href="visualizacao.html#cb271-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-118-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="compreendendo-o-ambiente-por-meio-de-suas-variáveis" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Compreendendo o ambiente por meio de suas variáveis</h2>
+<p>Em um estudo como o de Verneaux <span class="citation">(<a href="#ref-Verneaux1973" role="doc-biblioref">Verneaux 1973</a>)</span> o objetivo e entender os sistema de riachos por meio das variáveis que escolhemos quantificar e como o modo como escolermos visualizá-las. Os gráficos vistos acima não são certamente a única forma de imcorporar variáveis em uma figura. As possibilidade de manipulação de cores, símbolos e textos no ambiente gráfico fornece formas adicionais de incluirmos uma determinada informação. Nesta seção vamos explorar um pouco melhor estas questões.</p>
+<p>Dissemos que os pontos de amostragem foram obtidos ao longo do gradiente cabeceira-foz de um rio na França. Parte das informações que temos se referem às coordenadas geográficas destes pontos (no data frame <code>$yx</code>). Verifique também que a sequência dos pontos segue uma ordem crescente da distância da foz. Inicialmente, vamos plotar as coordenadas geográficas de todos os pontos utilizando um gráfico de linhas:</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="visualizacao.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>x, <span class="at">y =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>y, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb272-2"><a href="visualizacao.html#cb272-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Coordenada em x (km)&quot;</span>, </span>
+<span id="cb272-3"><a href="visualizacao.html#cb272-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Coordenada em y (km)&quot;</span>,</span>
+<span id="cb272-4"><a href="visualizacao.html#cb272-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;#4287f5&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-119-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Compare, a figura com o desenho do <a href="https://pt.wikipedia.org/wiki/Rio_Doubs">rio Doubs</a>.</p>
+<ul>
+<li>obs: utilizamos aqui a definição de cores em <strong>HEXADECIMAL</strong>. Você pode fazer o mesmo, escolhendo a cor desejada aqui: <a href="https://www.google.com/search?q=hex+color+picker&amp;oq=hex+color+picker&amp;aqs=chrome..69i57j0l7.11304j0j4&amp;sourceid=chrome&amp;ie=UTF-8">hex color picker</a>.</li>
+</ul>
+<p>Vamos indicar os pontos de cabeceira e foz.</p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="visualizacao.html#cb273-1" aria-hidden="true" tabindex="-1"></a>pontos_extremos <span class="ot">&lt;-</span> doubs<span class="sc">$</span>xy[<span class="fu">which</span>(doubs<span class="sc">$</span>env<span class="sc">$</span>dfs <span class="sc">==</span> <span class="fu">min</span>(doubs<span class="sc">$</span>env<span class="sc">$</span>dfs) <span class="sc">|</span> </span>
+<span id="cb273-2"><a href="visualizacao.html#cb273-2" aria-hidden="true" tabindex="-1"></a>                                      doubs<span class="sc">$</span>env<span class="sc">$</span>dfs <span class="sc">==</span> <span class="fu">max</span>(doubs<span class="sc">$</span>env<span class="sc">$</span>dfs)),]</span>
+<span id="cb273-3"><a href="visualizacao.html#cb273-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>x, <span class="at">y =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>y, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb273-4"><a href="visualizacao.html#cb273-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Coordenada em x (km)&quot;</span>, </span>
+<span id="cb273-5"><a href="visualizacao.html#cb273-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Coordenada em y (km)&quot;</span>,</span>
+<span id="cb273-6"><a href="visualizacao.html#cb273-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;#4287f5&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb273-7"><a href="visualizacao.html#cb273-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x =</span> pontos_extremos<span class="sc">$</span>x, </span>
+<span id="cb273-8"><a href="visualizacao.html#cb273-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> pontos_extremos<span class="sc">$</span>y,</span>
+<span id="cb273-9"><a href="visualizacao.html#cb273-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Cabeceira&quot;</span>, <span class="st">&quot;Foz&quot;</span>))</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-120-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Lembre-se que definimos acima 4 trechos. Vamos ver onde estes seções se localizam plotando-os com cores distintas.</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="visualizacao.html#cb274-1" aria-hidden="true" tabindex="-1"></a>secao_cor <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ambiente<span class="sc">$</span>secao)</span>
+<span id="cb274-2"><a href="visualizacao.html#cb274-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-3"><a href="visualizacao.html#cb274-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>x, <span class="at">y =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>y, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb274-4"><a href="visualizacao.html#cb274-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Coordenada em x (km)&quot;</span>, </span>
+<span id="cb274-5"><a href="visualizacao.html#cb274-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Coordenada em y (km)&quot;</span>,</span>
+<span id="cb274-6"><a href="visualizacao.html#cb274-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;#4287f5&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb274-7"><a href="visualizacao.html#cb274-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>x, <span class="at">y =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>y, <span class="at">pch =</span> <span class="dv">21</span>, </span>
+<span id="cb274-8"><a href="visualizacao.html#cb274-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">bg =</span> secao_cor, <span class="at">cex =</span> <span class="dv">3</span>)</span>
+<span id="cb274-9"><a href="visualizacao.html#cb274-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">&quot;bottomright&quot;</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
+<span id="cb274-10"><a href="visualizacao.html#cb274-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">levels</span>(ambiente<span class="sc">$</span>secao), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-121-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Aqui fica clara a divisão principal entre os grupos referente às seções 1 e 2 na metade superior do rio e as seções 3 e 4 na metade inferior. Para continuar explorando os dados, vamos inserir a informação sobre a concentração de amônia (<code>amm</code>).</p>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="visualizacao.html#cb275-1" aria-hidden="true" tabindex="-1"></a>secao_cor <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ambiente<span class="sc">$</span>secao) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb275-2"><a href="visualizacao.html#cb275-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-3"><a href="visualizacao.html#cb275-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>x, <span class="at">y =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>y, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb275-4"><a href="visualizacao.html#cb275-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Coordenada em x (km)&quot;</span>, </span>
+<span id="cb275-5"><a href="visualizacao.html#cb275-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Coordenada em y (km)&quot;</span>,</span>
+<span id="cb275-6"><a href="visualizacao.html#cb275-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;#4287f5&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb275-7"><a href="visualizacao.html#cb275-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>x, <span class="at">y =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>y, <span class="at">pch =</span> <span class="dv">21</span>, </span>
+<span id="cb275-8"><a href="visualizacao.html#cb275-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">bg =</span> secao_cor, <span class="at">cex =</span> <span class="dv">4</span>)</span>
+<span id="cb275-9"><a href="visualizacao.html#cb275-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">&quot;bottomright&quot;</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
+<span id="cb275-10"><a href="visualizacao.html#cb275-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">levels</span>(ambiente<span class="sc">$</span>secao), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb275-11"><a href="visualizacao.html#cb275-11" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>x, <span class="at">y =</span> doubs<span class="sc">$</span>xy<span class="sc">$</span>y, <span class="at">labels =</span> doubs<span class="sc">$</span>env<span class="sc">$</span>amm, </span>
+<span id="cb275-12"><a href="visualizacao.html#cb275-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb275-13"><a href="visualizacao.html#cb275-13" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">55</span>, <span class="at">y =</span> <span class="dv">220</span>, <span class="at">labels =</span> <span class="st">&quot;Concentração de amônia&quot;</span>)</span>
+<span id="cb275-14"><a href="visualizacao.html#cb275-14" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">25</span>, <span class="at">y =</span> <span class="dv">120</span>, <span class="at">label =</span> <span class="st">&quot;Foz&quot;</span>)</span>
+<span id="cb275-15"><a href="visualizacao.html#cb275-15" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">60</span>, <span class="at">y =</span> <span class="dv">20</span>, <span class="at">label =</span> <span class="st">&quot;Cabeceira&quot;</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-122-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Veja, que a concentração de amônia nos pontos em azul (Seção 4) é muito superior à dos pontos ao redor. Algo similar ocorre nos pontos em verde.</p>
+<p>Provavelmente, a concentração de amônia não é a única variável pela formação destes grupos. Você pode explorar as demais variáveis químicas para verificar se outras também apresentam padrões similares.</p>
+<p>O ponto importante e que merece ser ressaltado, é que o gráfico acima, não se enquadra em nenhuma das categorias anteriores (uni-variados, bi-variados, gráficos de barras, boxplots, etc.). No entanto, a figura nos informa sobre três variáveis: as coordenadas geográficas, a variável categórica <code>secao</code> e a concentração de amônia.</p>
+<ul>
+<li>Obs: utilizamos uma série de funções novas: <code>text</code>, <code>points</code>, <code>legend</code>. Para entender como elas funcionam, rode os comandos acima <strong>linha por linha</strong> e veja como cada função adiciona uma informação adicional à figura.</li>
+</ul>
+</div>
+<div id="mais-um-comentário-sobre-formatação-gráfica-no-r" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Mais um comentário sobre formatação gráfica no R</h2>
+<div id="outros-argumentos" class="section level3" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Outros argumentos</h3>
+<p>A capacidade de formatação gráfica no R é extensa. Qualquer tentativa de resumir todas elas seria incompleta. Portanto, apresento aqui somente alguns argumentos mais comuns. Rode abaixo cada uma das linhas e veja as figuras resultantes:</p>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="visualizacao.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente)</span>
+<span id="cb276-2"><a href="visualizacao.html#cb276-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">2</span>)</span>
+<span id="cb276-3"><a href="visualizacao.html#cb276-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb276-4"><a href="visualizacao.html#cb276-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb276-5"><a href="visualizacao.html#cb276-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>,</span>
+<span id="cb276-6"><a href="visualizacao.html#cb276-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Nitrato&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Vazão&quot;</span>)</span>
+<span id="cb276-7"><a href="visualizacao.html#cb276-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb276-8"><a href="visualizacao.html#cb276-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Nitrato&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Vazão&quot;</span>, <span class="at">font.lab =</span> <span class="dv">3</span>)</span>
+<span id="cb276-9"><a href="visualizacao.html#cb276-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, </span>
+<span id="cb276-10"><a href="visualizacao.html#cb276-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb276-11"><a href="visualizacao.html#cb276-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, </span>
+<span id="cb276-12"><a href="visualizacao.html#cb276-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb276-13"><a href="visualizacao.html#cb276-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, </span>
+<span id="cb276-14"><a href="visualizacao.html#cb276-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div>
+</div>
+<div id="figuras-compostas" class="section level3" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Figuras compostas</h3>
+<p>Podemos formar figuras compostas, inserindo múltiplos gráficos. Uma das formas mais simples para isto é utilizando a função <code>layout</code>. Abaixo, vamos inserir 6 gráficos em um mesmo espaço.</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="visualizacao.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="at">mat =</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span>))</span>
+<span id="cb277-2"><a href="visualizacao.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alt <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente)</span>
+<span id="cb277-3"><a href="visualizacao.html#cb277-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(amm <span class="sc">~</span> alt, <span class="at">data =</span> ambiente)</span>
+<span id="cb277-4"><a href="visualizacao.html#cb277-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nit <span class="sc">~</span> alt, <span class="at">data =</span> ambiente)</span>
+<span id="cb277-5"><a href="visualizacao.html#cb277-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pH <span class="sc">~</span> alt, <span class="at">data =</span> ambiente)</span>
+<span id="cb277-6"><a href="visualizacao.html#cb277-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bdo <span class="sc">~</span> alt, <span class="at">data =</span> ambiente)</span>
+<span id="cb277-7"><a href="visualizacao.html#cb277-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(oxy <span class="sc">~</span> alt, <span class="at">data =</span> ambiente)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-124-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="exportando-figuras-com-as-funções-png-tiff-jpeg-e-bmp" class="section level3" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Exportando figuras com as funções <code>png</code>, <code>tiff</code>, <code>jpeg</code> e <code>bmp</code></h3>
+<p>Temos melhor controle sobre a qualidade gráfica no R exportando figuras em uma variedade de formatos e resoluções. Exemplificamos esta funcionalidade abaixo com a função <code>png</code>. No entanto, uma breve busca nos menus de ajuda mostrará que existem funções similares para outras extensões de imagem que possume funcionamentos similares.</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="visualizacao.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename =</span> <span class="st">&quot;Exemplo_figura.png&quot;</span>,</span>
+<span id="cb278-2"><a href="visualizacao.html#cb278-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">15</span>, <span class="at">height =</span> <span class="dv">15</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>, </span>
+<span id="cb278-3"><a href="visualizacao.html#cb278-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">pointsize =</span> <span class="dv">10</span>, <span class="at">bg =</span> <span class="st">&quot;white&quot;</span>, <span class="at">res =</span> <span class="dv">800</span>)</span>
+<span id="cb278-4"><a href="visualizacao.html#cb278-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb278-5"><a href="visualizacao.html#cb278-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alt <span class="sc">~</span> dfs, <span class="at">data =</span> ambiente, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb278-6"><a href="visualizacao.html#cb278-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Vazão&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Elevação&quot;</span>)</span>
+<span id="cb278-7"><a href="visualizacao.html#cb278-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb278-8"><a href="visualizacao.html#cb278-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<p>Lembre-se que a figura foi salva do diretório atual de sua seção de trabalho. Você pode conferir este diretório com:</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="visualizacao.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
+<p>Experimente alterar os argumentos <code>width</code>, <code>height</code>, <code>pointsize</code>, <code>units</code> (com <code>"px"</code>, <code>"in"</code>, <code>"cm"</code> ou <code>"mm"</code>) e <code>res</code>.</p>
+<p>As capacidades gráficas no R incluem ainda muitos outros argumentos. Alguns deles são: cores (<code>col</code>), tipos da fonte (<code>font</code>), tamanhos de símbolos (<code>cex</code>), dos labels (<code>cex.lab</code>), dos rótulos dos eixos (<code>cex.axis</code>), título (<code>main</code>), etc. Pode-se ainda inserir legendas (função <code>legend</code>) e textos (função <code>text</code>). Veja o <strong>help</strong> de cada uma destas funções e a lista de argumentos possíveis para o ambiente gráfico do R em <code>?par</code>. Veja também uma demonstração com <code>demo(graphics)</code>, <code>demo(image)</code>, <code>demo(persp)</code> e <code>demo(plotmath)</code>.</p>
+<p>Existem diversos outros pacotes gráficos além do <code>graphics</code>:</p>
+<ul>
+<li><code>ggplot2</code></li>
+<li><code>ggvis</code></li>
+<li><code>Lattice</code></li>
+<li><code>highcharter</code></li>
+<li><code>Leaflet</code></li>
+<li><code>RColorBrewer</code></li>
+<li><code>Plotly</code></li>
+<li><code>sunburstR</code></li>
+<li><code>RGL</code></li>
+<li><code>dygraphs</code></li>
+</ul>
+<p>Veremos somente uma introdução ao pacote <code>ggplot2</code> no capítulo <a href="tidy.html#tidy">4</a>. Você pode buscar informações nos manuais oficias destes pacotes, mas sem dúvida a fonte mais extensa de informação são todos os usuários que dispõem de seus exemplos na rede. Assim, para aprender sobre estes pacotes ou outras técinicas gráficas no R não exite em tentar um <strong>Google</strong> do tipo <a href="https://www.google.com.br/search?sxsrf=ALeKk00KUMfabSYS-mRTqdTiLdeOR65jnA%3A1594162286064&amp;source=hp&amp;ei=bvwEX8TUAZm25OUP0LCXsAw&amp;q=quero+fazer+meus+gr%C3%A1ficos+no+R&amp;oq=quero+fazer+meus+gr%C3%A1ficos+no+R&amp;gs_lcp=CgZwc3ktYWIQA1DwDVjwDWCRF2gAcAB4AIABmgGIAZoBkgEDMC4xmAEAoAECoAEBqgEHZ3dzLXdpeg&amp;sclient=psy-ab&amp;ved=0ahUKEwjEw5emnbzqAhUZG7kGHVDYBcYQ4dUDCAc&amp;uact=5">quero fazer meus gráficos no R</a>.</p>
+<p><strong>Boa sorte!!</strong></p>
+
+</div>
+</div>
+</div>
+
+
+
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-borcard2018numerical" class="csl-entry">
+Borcard, Daniel, François Gillet, and Pierre Legendre. 2018. <em>Numerical Ecology with r</em>. Springer.
+</div>
+<div id="ref-dray2015ade" class="csl-entry">
+Dray, S, AB Dufour, and J Thioulouse. 2015. <span>“Ade 4: Analysis of Ecological Data: Exploratory and Euclidean Methods in Environmental Sciences. R Package Version 1.7-2.”</span>
+</div>
+<div id="ref-Verneaux1973" class="csl-entry">
+Verneaux, J. 1973. <span>“Cours d’eau de Franche-Comté (Massif Du Jura). Recherches écologiques Sur Le réseau Hydrographique Du Doubs. Essai de Biotypologie.”</span> PhD thesis, Thèse d’état, Besançon.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="manipulacao.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidy.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["IntroR.pdf", "IntroR.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

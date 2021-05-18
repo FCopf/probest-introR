@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 2 (Básico da) Manipulação de data frames | Introdução ao Ambiente R de Programação</title>
+  <meta name="description" content="Capítulo 2 (Básico da) Manipulação de data frames | Introdução ao Ambiente R de Programação" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 2 (Básico da) Manipulação de data frames | Introdução ao Ambiente R de Programação" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Capítulo 2 (Básico da) Manipulação de data frames | Introdução ao Ambiente R de Programação" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 2 (Básico da) Manipulação de data frames | Introdução ao Ambiente R de Programação" />
+  
+  <meta name="twitter:description" content="Capítulo 2 (Básico da) Manipulação de data frames | Introdução ao Ambiente R de Programação" />
+  
+
+<meta name="author" content="Fabio Cop" />
+<meta name="author" content="fabiocopf@gmail.com" />
+<meta name="author" content="Instituto do Mar, Universidade Federal de São Paulo" />
+
+
+<meta name="date" content="2021-05-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="visualizacao.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">"Introdução ao Ambiente R de Programação"</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Apresentação</a></li>
+<li class="part"><span><b>I Fundamentos de programação em R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introdução ao programa R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalação-do-r"><i class="fa fa-check"></i><b>1.1</b> Instalação do R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#interface-de-desenvolvimento-ide"><i class="fa fa-check"></i><b>1.2</b> Interface de desenvolvimento (IDE)</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#o-r-para-cálculos-aritméticos"><i class="fa fa-check"></i><b>1.3</b> O R para cálculos aritméticos</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#atribuição-de-valores"><i class="fa fa-check"></i><b>1.4</b> Atribuição de valores</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#estruturas-de-dados"><i class="fa fa-check"></i><b>1.5</b> Estruturas de dados</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#vetores-numéricos"><i class="fa fa-check"></i><b>1.5.1</b> Vetores numéricos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#vetores-alfanuméricos"><i class="fa fa-check"></i><b>1.5.2</b> Vetores alfanuméricos</a></li>
+<li class="chapter" data-level="1.5.3" data-path="intro.html"><a href="intro.html#unindo-vetores-comando-paste"><i class="fa fa-check"></i><b>1.5.3</b> Unindo vetores: comando paste</a></li>
+<li class="chapter" data-level="1.5.4" data-path="intro.html"><a href="intro.html#fatores"><i class="fa fa-check"></i><b>1.5.4</b> Fatores</a></li>
+<li class="chapter" data-level="1.5.5" data-path="intro.html"><a href="intro.html#matrizes"><i class="fa fa-check"></i><b>1.5.5</b> Matrizes</a></li>
+<li class="chapter" data-level="1.5.6" data-path="intro.html"><a href="intro.html#data-frames"><i class="fa fa-check"></i><b>1.5.6</b> Data frames</a></li>
+<li class="chapter" data-level="1.5.7" data-path="intro.html"><a href="intro.html#listas"><i class="fa fa-check"></i><b>1.5.7</b> Listas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#operadores-relacionais"><i class="fa fa-check"></i><b>1.6</b> Operadores relacionais</a></li>
+<li class="chapter" data-level="1.7" data-path="intro.html"><a href="intro.html#operadores-lógicos"><i class="fa fa-check"></i><b>1.7</b> Operadores lógicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manipulacao.html"><a href="manipulacao.html"><i class="fa fa-check"></i><b>2</b> (Básico da) Manipulação de data frames</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manipulacao.html"><a href="manipulacao.html#iniciando-uma-seção-de-trabalho"><i class="fa fa-check"></i><b>2.1</b> Iniciando uma seção de trabalho</a></li>
+<li class="chapter" data-level="2.2" data-path="manipulacao.html"><a href="manipulacao.html#importando-arquivos-.csv"><i class="fa fa-check"></i><b>2.2</b> Importando arquivos <code>.csv</code></a></li>
+<li class="chapter" data-level="2.3" data-path="manipulacao.html"><a href="manipulacao.html#seleção-de-linhas-e-colunas-em-data-frames"><i class="fa fa-check"></i><b>2.3</b> Seleção de linhas e colunas em data frames</a></li>
+<li class="chapter" data-level="2.4" data-path="manipulacao.html"><a href="manipulacao.html#adicionando-novas-colunas-a-um-data-frame"><i class="fa fa-check"></i><b>2.4</b> Adicionando novas colunas a um data frame</a></li>
+<li class="chapter" data-level="2.5" data-path="manipulacao.html"><a href="manipulacao.html#aplicando-uma-função-às-linhas-ou-colunas-de-um-data-frame"><i class="fa fa-check"></i><b>2.5</b> Aplicando uma função às linhas ou colunas de um data frame</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manipulacao.html"><a href="manipulacao.html#família-de-funções-apply"><i class="fa fa-check"></i><b>2.5.1</b> Família de funções <code>apply</code></a></li>
+<li class="chapter" data-level="2.5.2" data-path="manipulacao.html"><a href="manipulacao.html#função-aggregate"><i class="fa fa-check"></i><b>2.5.2</b> Função <code>aggregate</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manipulacao.html"><a href="manipulacao.html#exportando-um-data-frame"><i class="fa fa-check"></i><b>2.6</b> Exportando um data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualizacao.html"><a href="visualizacao.html"><i class="fa fa-check"></i><b>3</b> (Básico da) Visualização gráfica: pacote <code>graphics</code></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualizacao.html"><a href="visualizacao.html#doubs-river-dataset"><i class="fa fa-check"></i><b>3.1</b> Doubs river dataset</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visualizacao.html"><a href="visualizacao.html#instalando-o-pacote-ade4-e-carregando-os-dados"><i class="fa fa-check"></i><b>3.1.1</b> Instalando o pacote <code>ade4</code> e carregando os dados</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visualizacao.html"><a href="visualizacao.html#descrevendo-os-padrões-de-uma-variável"><i class="fa fa-check"></i><b>3.2</b> Descrevendo os padrões de uma variável</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-barras"><i class="fa fa-check"></i><b>3.2.1</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="3.2.2" data-path="visualizacao.html"><a href="visualizacao.html#histograma"><i class="fa fa-check"></i><b>3.2.2</b> Histograma</a></li>
+<li class="chapter" data-level="3.2.3" data-path="visualizacao.html"><a href="visualizacao.html#boxplot"><i class="fa fa-check"></i><b>3.2.3</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="visualizacao.html"><a href="visualizacao.html#visualizando-associações-entre-duas-variáveis"><i class="fa fa-check"></i><b>3.3</b> Visualizando associações entre duas variáveis</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-barras-1"><i class="fa fa-check"></i><b>3.3.1</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="3.3.2" data-path="visualizacao.html"><a href="visualizacao.html#boxplot-1"><i class="fa fa-check"></i><b>3.3.2</b> Boxplot</a></li>
+<li class="chapter" data-level="3.3.3" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-dispersão"><i class="fa fa-check"></i><b>3.3.3</b> Gráfico de dispersão</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="visualizacao.html"><a href="visualizacao.html#compreendendo-o-ambiente-por-meio-de-suas-variáveis"><i class="fa fa-check"></i><b>3.4</b> Compreendendo o ambiente por meio de suas variáveis</a></li>
+<li class="chapter" data-level="3.5" data-path="visualizacao.html"><a href="visualizacao.html#mais-um-comentário-sobre-formatação-gráfica-no-r"><i class="fa fa-check"></i><b>3.5</b> Mais um comentário sobre formatação gráfica no R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="visualizacao.html"><a href="visualizacao.html#outros-argumentos"><i class="fa fa-check"></i><b>3.5.1</b> Outros argumentos</a></li>
+<li class="chapter" data-level="3.5.2" data-path="visualizacao.html"><a href="visualizacao.html#figuras-compostas"><i class="fa fa-check"></i><b>3.5.2</b> Figuras compostas</a></li>
+<li class="chapter" data-level="3.5.3" data-path="visualizacao.html"><a href="visualizacao.html#exportando-figuras-com-as-funções-png-tiff-jpeg-e-bmp"><i class="fa fa-check"></i><b>3.5.3</b> Exportando figuras com as funções <code>png</code>, <code>tiff</code>, <code>jpeg</code> e <code>bmp</code></a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Uma coleção integrada de pacotes para ciência de dados</b></span></li>
+<li class="chapter" data-level="4" data-path="tidy.html"><a href="tidy.html"><i class="fa fa-check"></i><b>4</b> Os pacotes em <code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="tidy.html"><a href="tidy.html#instalando-os-pacotes-tidyverse"><i class="fa fa-check"></i><b>4.0.1</b> Instalando os pacotes <code>tidyverse</code></a></li>
+<li class="chapter" data-level="4.1" data-path="tidy.html"><a href="tidy.html#carregando-os-pacotes"><i class="fa fa-check"></i><b>4.1</b> Carregando os pacotes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="importe.html"><a href="importe.html"><i class="fa fa-check"></i><b>5</b> Importando/Exportando dados</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="importe.html"><a href="importe.html#ajustando-o-diretório-de-trabalho"><i class="fa fa-check"></i><b>5.1</b> Ajustando o diretório de trabalho</a></li>
+<li class="chapter" data-level="5.2" data-path="importe.html"><a href="importe.html#importando-dados-em-arquvos-de-texto"><i class="fa fa-check"></i><b>5.2</b> Importando dados em arquvos de texto</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>6</b> Operador Pipe</a></li>
+<li class="chapter" data-level="7" data-path="format.html"><a href="format.html"><i class="fa fa-check"></i><b>7</b> Manipulação e formatação de dados</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="format.html"><a href="format.html#transformação-de-dados-os-pacotes-dplyr-e-tidyr"><i class="fa fa-check"></i><b>7.1</b> Transformação de dados: os pacotes <code>dplyr</code> e <code>tidyr</code></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="format.html"><a href="format.html#ordenando-as-linhas-funções-arrange-e-desc"><i class="fa fa-check"></i><b>7.1.1</b> Ordenando as linhas: funções <code>arrange()</code> e <code>desc()</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="format.html"><a href="format.html#filtrando-linhas-função-filter"><i class="fa fa-check"></i><b>7.1.2</b> Filtrando linhas: função <code>filter()</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="format.html"><a href="format.html#selecionando-colunas-função-select"><i class="fa fa-check"></i><b>7.1.3</b> Selecionando colunas: função <code>select()</code></a></li>
+<li class="chapter" data-level="7.1.4" data-path="format.html"><a href="format.html#agrupando-tabelas-funções-do-grupo-join"><i class="fa fa-check"></i><b>7.1.4</b> Agrupando tabelas: funções do grupo <code>join</code></a></li>
+<li class="chapter" data-level="7.1.5" data-path="format.html"><a href="format.html#criando-e-modificando-colunas-função-mutate"><i class="fa fa-check"></i><b>7.1.5</b> Criando e modificando colunas: função <code>mutate()</code></a></li>
+<li class="chapter" data-level="7.1.6" data-path="format.html"><a href="format.html#unindo-colunas-função-unite"><i class="fa fa-check"></i><b>7.1.6</b> Unindo colunas: função <code>unite()</code></a></li>
+<li class="chapter" data-level="7.1.7" data-path="format.html"><a href="format.html#reformatando-tabelas-funções-spread-e-gather"><i class="fa fa-check"></i><b>7.1.7</b> Reformatando tabelas: funções <code>spread()</code> e <code>gather()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>8</b> Um gráfico em camadas: o pacote <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ggplot2.html"><a href="ggplot2.html#hubbard-brook-stream-flow"><i class="fa fa-check"></i><b>8.1</b> Hubbard Brook stream flow</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="ggplot2.html"><a href="ggplot2.html#entendendo-a-gramática-do-ggplot"><i class="fa fa-check"></i><b>8.1.1</b> Entendendo a gramática do <code>ggplot</code></a></li>
+<li class="chapter" data-level="8.1.2" data-path="ggplot2.html"><a href="ggplot2.html#outras-geometrias-gráficas"><i class="fa fa-check"></i><b>8.1.2</b> Outras <em>Geometrias</em> gráficas</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ggplot2.html"><a href="ggplot2.html#gáfico-de-dispersão"><i class="fa fa-check"></i><b>8.2</b> Gáfico de dispersão</a></li>
+<li class="chapter" data-level="8.3" data-path="ggplot2.html"><a href="ggplot2.html#boxplot-2"><i class="fa fa-check"></i><b>8.3</b> Boxplot</a></li>
+<li class="chapter" data-level="8.4" data-path="ggplot2.html"><a href="ggplot2.html#gráfico-de-linhas"><i class="fa fa-check"></i><b>8.4</b> Gráfico de linhas</a></li>
+<li class="chapter" data-level="8.5" data-path="ggplot2.html"><a href="ggplot2.html#gráfico-de-barras-2"><i class="fa fa-check"></i><b>8.5</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="8.6" data-path="ggplot2.html"><a href="ggplot2.html#temas-no-ggplot2"><i class="fa fa-check"></i><b>8.6</b> Temas no <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.7" data-path="ggplot2.html"><a href="ggplot2.html#salvando-uma-figura-gerada-pelo-gglot2."><i class="fa fa-check"></i><b>8.7</b> Salvando uma figura gerada pelo <code>gglot2</code>.</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introdução ao Ambiente R de Programação</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="manipulacao" class="section level1" number="2">
+<h1><span class="header-section-number">Capítulo 2</span> (Básico da) Manipulação de data frames</h1>
+<p>Ainda que seja possivel criar um data frame entrando diretamente com os dados via linha de comando, é mais comum <strong>importamos</strong> tabelas a partir de arquivos <code>.csv</code>, <code>.txt</code> ou outros formatos. Ao importar estes tipos de arquivo, o R os lê como <code>data.frames</code>.</p>
+<p>Inicialmente vamos introduzir métodos de preparação de uma nova seção em R e importação/exportação de tabelas.</p>
+<div id="iniciando-uma-seção-de-trabalho" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Iniciando uma seção de trabalho</h2>
+<p>Seção no R, se refere ao ambiente em que ficam armazenados os objetos (vetores, matrizes, data frames, etc.) criados durante o processo de manipulação e análise de dados. Ao fechar uma seção do R (ex. ao sair do R Stúdio), esta pode ser salva guardando os objetos criados. O arquivo de uma seção é salvo com extensão <code>.RData</code>.</p>
+<p>Ao abrir um novo <em>script</em> (com extensão <code>.r</code>) em um editor de texto é necessário definir o diretório em que iremos trabalhar. Este <em>diretório de trabalho</em> será o local de onde iremos importar dados, e para onde iremos salvar as figuras e tabelas criadas ao longo do trabalho. No R-Studio, um novo <em>script</em> pode ser aberto via menu <code>Arquivo --&gt; Novo script</code>. Ao iniciar o R-Studio abre-se uma nova seção. O diretório desta seção pode ser verificado pelo comando:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="manipulacao.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
+<p>Crie uma pasta <span class="math inline">\(\texttt{IntroR}\)</span> e direcione a seção de trabalho para esta pasta utilizando a função <code>setwd("C:/seu_caminho/IntroR")</code> e verifique se houve mudança com a função <code>getwd()</code></p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="manipulacao.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/seu_caminho/IntroR&quot;</span>)</span>
+<span id="cb198-2"><a href="manipulacao.html#cb198-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;C:/seu_caminho/IntroR&quot;</code></pre>
+<p>A partir deste momento o R irá ler e salvar aquivos sempre neste diretório.</p>
+</div>
+<div id="importando-arquivos-.csv" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Importando arquivos <code>.csv</code></h2>
+<p>Importe o conjunto dados <code>dbenv.csv</code>. Abra o arquivo em algum editor de texto e veja as características deste arquivo. Você verá por exemplo que ele é composto por 11 variáveis (<em>colunas</em>) mensuradas em 30 pontos (<em>linhas</em>). Este conjunto de dados pode ser obtido <a href="https://github.com/FCopf/estatistica-livro/blob/master/datasets/dbenv.csv" target="_blank">Aqui em formato .csv</a>. Após fazer o download, você pode importar o conjunto de dados por:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="manipulacao.html#cb200-1" aria-hidden="true" tabindex="-1"></a>dbenv <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;C:/seu_caminho/IntroR/dbenv.csv&quot;</span>, </span>
+<span id="cb200-2"><a href="manipulacao.html#cb200-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">dec =</span> <span class="st">&#39;.&#39;</span>, <span class="at">sep =</span> <span class="st">&#39;,&#39;</span>)</span></code></pre></div>
+<p>A função <code>read.csv</code> possui diferentes argumentos. A argumento <code>header</code> define se a primeira linha consiste do cabeçalho (<code>TRUE</code>) ou não (<code>FALSE</code>). O argumento <code>dec</code> define se o separador decimal consiste de <em>vírgula</em> ou <em>ponto</em> e o argumento <code>sep</code> informa sobre qual é o caracter separador de colunas utilizado no arquivo. No arquivo em questão as colunas são separadas por <em>vírgulas</em>. Outros tipos de separadores comuns são <em>ponto-e-vírgula</em> ou <em>tabulações</em>.</p>
+<p>Veja os nomes das 11 variáveis (cabeçalho), a dimensão da tabela (número de linhas e colunas) e sua estrutura (um <code>data.frame</code> formado por 11 vetores numéricos).</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="manipulacao.html#cb201-1" aria-hidden="true" tabindex="-1"></a>dbenv</span></code></pre></div>
+<pre><code>##     dfs alt   slo  flo pH har pho nit amm oxy bdo
+## 1     3 934 6.176   84 79  45   1  20   0 122  27
+## 2    22 932 3.434  100 80  40   2  20  10 103  19
+## 3   102 914 3.638  180 83  52   5  22   5 105  35
+## 4   185 854 3.497  253 80  72  10  21   0 110  13
+## 5   215 849 3.178  264 81  84  38  52  20  80  62
+## 6   324 846 3.497  286 79  60  20  15   0 102  53
+## 7   268 841 4.205  400 81  88   7  15   0 111  22
+## 8   491 792 3.258  130 81  94  20  41  12  70  81
+## 9   705 752 2.565  480 80  90  30  82  12  72  52
+## 10  990 617 4.605 1000 77  82   6  75   1 100  43
+## 11 1234 483 3.738 1990 81  96  30 160   0 115  27
+## 12 1324 477 2.833 2000 79  86   4  50   0 122  30
+## 13 1436 450 3.091 2110 81  98   6  52   0 124  24
+## 14 1522 434 2.565 2120 83  98  27 123   0 123  38
+## 15 1645 415 1.792 2300 86  86  40 100   0 117  21
+## 16 1859 375 3.045 1610 80  88  20 200   5 103  27
+## 17 1985 348 1.792 2430 80  92  20 250  20 102  46
+## 18 2110 332 2.197 2500 80  90  50 220  20 103  28
+## 19 2246 310 1.792 2590 81  84  60 220  15 106  33
+## 20 2477 286 2.197 2680 80  86  30 300  30 103  28
+## 21 2812 262 2.398 2720 79  85  20 220  10  90  41
+## 22 2940 254 2.708 2790 81  88  20 162   7  91  48
+## 23 3043 246 2.565 2880 81  97 260 350 115  63 164
+## 24 3147 241 1.386 2976 80  99 140 250  60  52 123
+## 25 3278 231 1.792 3870 79 100 422 620 180  41 167
+## 26 3579 214 1.792 3910 79  94 143 300  30  62  89
+## 27 3732 206 2.565 3960 81  90  58 300  26  72  63
+## 28 3947 195 1.386 4320 83 100  74 400  30  81  45
+## 29 4220 183 1.946 6770 78 110  45 162  10  90  42
+## 30 4530 172 1.099 6900 82 109  65 160  10  82  44</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="manipulacao.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dbenv)</span></code></pre></div>
+<pre><code>##  [1] &quot;dfs&quot; &quot;alt&quot; &quot;slo&quot; &quot;flo&quot; &quot;pH&quot;  &quot;har&quot; &quot;pho&quot; &quot;nit&quot; &quot;amm&quot; &quot;oxy&quot; &quot;bdo&quot;</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="manipulacao.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dbenv)</span></code></pre></div>
+<pre><code>## [1] 30 11</code></pre>
+<p><em>Observação</em>: arquivos <code>.txt</code> podem ser lidos com a função <code>read.table</code>. Veremos a frente funções para leitura de outros formatos.</p>
+</div>
+<div id="seleção-de-linhas-e-colunas-em-data-frames" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Seleção de linhas e colunas em data frames</h2>
+<p>No data frame que importamos as colunas têm nomes que podem ser acessados por:</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="manipulacao.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dbenv)</span></code></pre></div>
+<pre><code>##  [1] &quot;dfs&quot; &quot;alt&quot; &quot;slo&quot; &quot;flo&quot; &quot;pH&quot;  &quot;har&quot; &quot;pho&quot; &quot;nit&quot; &quot;amm&quot; &quot;oxy&quot; &quot;bdo&quot;</code></pre>
+<p>O nome das linhas podem ser acessados por:</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="manipulacao.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(dbenv)</span></code></pre></div>
+<pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot; &quot;15&quot;
+## [16] &quot;16&quot; &quot;17&quot; &quot;18&quot; &quot;19&quot; &quot;20&quot; &quot;21&quot; &quot;22&quot; &quot;23&quot; &quot;24&quot; &quot;25&quot; &quot;26&quot; &quot;27&quot; &quot;28&quot; &quot;29&quot; &quot;30&quot;</code></pre>
+<p>Os números <em>“entre aspas”</em> significam que o R está lendo os nomes das linhas não como números, mas como caracteres.</p>
+<p>Podemos utilizar colunas específicas deste por meio de seus nomes:</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="manipulacao.html#cb211-1" aria-hidden="true" tabindex="-1"></a>colunas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;dfs&quot;</span>, <span class="st">&quot;flo&quot;</span>, <span class="st">&quot;oxy&quot;</span>)</span>
+<span id="cb211-2"><a href="manipulacao.html#cb211-2" aria-hidden="true" tabindex="-1"></a>dbenv[,colunas]</span></code></pre></div>
+<pre><code>##     dfs  flo oxy
+## 1     3   84 122
+## 2    22  100 103
+## 3   102  180 105
+## 4   185  253 110
+## 5   215  264  80
+## 6   324  286 102
+## 7   268  400 111
+## 8   491  130  70
+## 9   705  480  72
+## 10  990 1000 100
+## 11 1234 1990 115
+## 12 1324 2000 122
+## 13 1436 2110 124
+## 14 1522 2120 123
+## 15 1645 2300 117
+## 16 1859 1610 103
+## 17 1985 2430 102
+## 18 2110 2500 103
+## 19 2246 2590 106
+## 20 2477 2680 103
+## 21 2812 2720  90
+## 22 2940 2790  91
+## 23 3043 2880  63
+## 24 3147 2976  52
+## 25 3278 3870  41
+## 26 3579 3910  62
+## 27 3732 3960  72
+## 28 3947 4320  81
+## 29 4220 6770  90
+## 30 4530 6900  82</code></pre>
+<p>Também podemos acessá-las pela sua posição:</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="manipulacao.html#cb213-1" aria-hidden="true" tabindex="-1"></a>colunas_num <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb213-2"><a href="manipulacao.html#cb213-2" aria-hidden="true" tabindex="-1"></a>dbenv[,colunas_num]</span></code></pre></div>
+<pre><code>##     dfs   slo  flo
+## 1     3 6.176   84
+## 2    22 3.434  100
+## 3   102 3.638  180
+## 4   185 3.497  253
+## 5   215 3.178  264
+## 6   324 3.497  286
+## 7   268 4.205  400
+## 8   491 3.258  130
+## 9   705 2.565  480
+## 10  990 4.605 1000
+## 11 1234 3.738 1990
+## 12 1324 2.833 2000
+## 13 1436 3.091 2110
+## 14 1522 2.565 2120
+## 15 1645 1.792 2300
+## 16 1859 3.045 1610
+## 17 1985 1.792 2430
+## 18 2110 2.197 2500
+## 19 2246 1.792 2590
+## 20 2477 2.197 2680
+## 21 2812 2.398 2720
+## 22 2940 2.708 2790
+## 23 3043 2.565 2880
+## 24 3147 1.386 2976
+## 25 3278 1.792 3870
+## 26 3579 1.792 3910
+## 27 3732 2.565 3960
+## 28 3947 1.386 4320
+## 29 4220 1.946 6770
+## 30 4530 1.099 6900</code></pre>
+<p>O mesmo é válido para as linhas.</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="manipulacao.html#cb215-1" aria-hidden="true" tabindex="-1"></a>linhas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;3&quot;</span>, <span class="st">&quot;7&quot;</span>, <span class="st">&quot;9&quot;</span>)</span>
+<span id="cb215-2"><a href="manipulacao.html#cb215-2" aria-hidden="true" tabindex="-1"></a>dbenv[linhas,]</span></code></pre></div>
+<pre><code>##   dfs alt   slo flo pH har pho nit amm oxy bdo
+## 3 102 914 3.638 180 83  52   5  22   5 105  35
+## 7 268 841 4.205 400 81  88   7  15   0 111  22
+## 9 705 752 2.565 480 80  90  30  82  12  72  52</code></pre>
+<p>Também podemos acessá-las pela sua posição:</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="manipulacao.html#cb217-1" aria-hidden="true" tabindex="-1"></a>linhas_num <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">9</span>)</span>
+<span id="cb217-2"><a href="manipulacao.html#cb217-2" aria-hidden="true" tabindex="-1"></a>dbenv[linhas_num,]</span></code></pre></div>
+<pre><code>##   dfs alt   slo flo pH har pho nit amm oxy bdo
+## 3 102 914 3.638 180 83  52   5  22   5 105  35
+## 7 268 841 4.205 400 81  88   7  15   0 111  22
+## 9 705 752 2.565 480 80  90  30  82  12  72  52</code></pre>
+<p>Finalmente, podemos combinar estes procedimentos para selecionar sub-conjunto de linhas e colunas.</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="manipulacao.html#cb219-1" aria-hidden="true" tabindex="-1"></a>dbenv[linhas,colunas]</span></code></pre></div>
+<pre><code>##   dfs flo oxy
+## 3 102 180 105
+## 7 268 400 111
+## 9 705 480  72</code></pre>
+</div>
+<div id="adicionando-novas-colunas-a-um-data-frame" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Adicionando novas colunas a um data frame</h2>
+<p>Este conjunto de dados mostra medidas físicas e químicas obtidas em um riacho seguindo do trecho alto de cabeceira seguindo para os trechos baixos próximos à foz. O ponto mais alto (934 m de altitude) está a 3 km da cabeceira enquanto o ponto mais baixo está a 172 m de altitude e a 4530 km da cabeceira. Vamos criar uma nova variável categorizando os trechos do rio em “Alto,” “Medio” e “Baixo” assumindo a seguinte relação:</p>
+<ul>
+<li>0 a 300 m: Baixo;</li>
+<li>300 a 600 m: Médio;</li>
+<li>Acima de 600 m: Alto.</li>
+</ul>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="manipulacao.html#cb221-1" aria-hidden="true" tabindex="-1"></a>elv_cat <span class="ot">&lt;-</span> <span class="fu">cut</span>(dbenv<span class="sc">$</span>alt, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>, <span class="dv">600</span>, <span class="dv">1000</span>), </span>
+<span id="cb221-2"><a href="manipulacao.html#cb221-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Baixo&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Alto&quot;</span>))</span></code></pre></div>
+<p>A inserção do novo objeto <code>elv_cat</code> no data frame pode ser feito simplesmente por:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="manipulacao.html#cb222-1" aria-hidden="true" tabindex="-1"></a>dbenv<span class="sc">$</span>trecho <span class="ot">&lt;-</span> elv_cat</span></code></pre></div>
+<p>Assim, inserimos assim, uma nova coluna denominada <code>trecho</code> contendo uma variável categórica com três níveis.</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="manipulacao.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dbenv)</span></code></pre></div>
+<pre><code>##   dfs alt   slo flo pH har pho nit amm oxy bdo trecho
+## 1   3 934 6.176  84 79  45   1  20   0 122  27   Alto
+## 2  22 932 3.434 100 80  40   2  20  10 103  19   Alto
+## 3 102 914 3.638 180 83  52   5  22   5 105  35   Alto
+## 4 185 854 3.497 253 80  72  10  21   0 110  13   Alto
+## 5 215 849 3.178 264 81  84  38  52  20  80  62   Alto
+## 6 324 846 3.497 286 79  60  20  15   0 102  53   Alto</code></pre>
+<p>Poderíamos ter realizado exatamente o mesmo utilizando a função <code>transform()</code>. Vamos utilizá-la a seguir como exemplo, criando uma nova variável categórica a partir do oxigênio dissolvido, considerando 3 níveis: pobre (0 a 5), médio (5 a 8), saturado (&gt; 8).</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="manipulacao.html#cb225-1" aria-hidden="true" tabindex="-1"></a>dbenv <span class="ot">&lt;-</span> <span class="fu">transform</span>(dbenv,  </span>
+<span id="cb225-2"><a href="manipulacao.html#cb225-2" aria-hidden="true" tabindex="-1"></a> <span class="at">saturacao =</span> <span class="fu">cut</span>(dbenv<span class="sc">$</span>oxy, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dv">109</span>, <span class="dv">124</span>), </span>
+<span id="cb225-3"><a href="manipulacao.html#cb225-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Pobre&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Saturado&quot;</span>)))</span></code></pre></div>
+<p>Veja agora o data frame</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="manipulacao.html#cb226-1" aria-hidden="true" tabindex="-1"></a>dbenv</span></code></pre></div>
+<pre><code>##     dfs alt   slo  flo pH har pho nit amm oxy bdo trecho saturacao
+## 1     3 934 6.176   84 79  45   1  20   0 122  27   Alto  Saturado
+## 2    22 932 3.434  100 80  40   2  20  10 103  19   Alto     Medio
+## 3   102 914 3.638  180 83  52   5  22   5 105  35   Alto     Medio
+## 4   185 854 3.497  253 80  72  10  21   0 110  13   Alto  Saturado
+## 5   215 849 3.178  264 81  84  38  52  20  80  62   Alto     Medio
+## 6   324 846 3.497  286 79  60  20  15   0 102  53   Alto     Medio
+## 7   268 841 4.205  400 81  88   7  15   0 111  22   Alto  Saturado
+## 8   491 792 3.258  130 81  94  20  41  12  70  81   Alto     Medio
+## 9   705 752 2.565  480 80  90  30  82  12  72  52   Alto     Medio
+## 10  990 617 4.605 1000 77  82   6  75   1 100  43   Alto     Medio
+## 11 1234 483 3.738 1990 81  96  30 160   0 115  27  Medio  Saturado
+## 12 1324 477 2.833 2000 79  86   4  50   0 122  30  Medio  Saturado
+## 13 1436 450 3.091 2110 81  98   6  52   0 124  24  Medio  Saturado
+## 14 1522 434 2.565 2120 83  98  27 123   0 123  38  Medio  Saturado
+## 15 1645 415 1.792 2300 86  86  40 100   0 117  21  Medio  Saturado
+## 16 1859 375 3.045 1610 80  88  20 200   5 103  27  Medio     Medio
+## 17 1985 348 1.792 2430 80  92  20 250  20 102  46  Medio     Medio
+## 18 2110 332 2.197 2500 80  90  50 220  20 103  28  Medio     Medio
+## 19 2246 310 1.792 2590 81  84  60 220  15 106  33  Medio     Medio
+## 20 2477 286 2.197 2680 80  86  30 300  30 103  28  Baixo     Medio
+## 21 2812 262 2.398 2720 79  85  20 220  10  90  41  Baixo     Medio
+## 22 2940 254 2.708 2790 81  88  20 162   7  91  48  Baixo     Medio
+## 23 3043 246 2.565 2880 81  97 260 350 115  63 164  Baixo     Medio
+## 24 3147 241 1.386 2976 80  99 140 250  60  52 123  Baixo     Medio
+## 25 3278 231 1.792 3870 79 100 422 620 180  41 167  Baixo     Medio
+## 26 3579 214 1.792 3910 79  94 143 300  30  62  89  Baixo     Medio
+## 27 3732 206 2.565 3960 81  90  58 300  26  72  63  Baixo     Medio
+## 28 3947 195 1.386 4320 83 100  74 400  30  81  45  Baixo     Medio
+## 29 4220 183 1.946 6770 78 110  45 162  10  90  42  Baixo     Medio
+## 30 4530 172 1.099 6900 82 109  65 160  10  82  44  Baixo     Medio</code></pre>
+</div>
+<div id="aplicando-uma-função-às-linhas-ou-colunas-de-um-data-frame" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Aplicando uma função às linhas ou colunas de um data frame</h2>
+<div id="família-de-funções-apply" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Família de funções <code>apply</code></h3>
+<p>Em muitas situações temos interesse aplicar um determinado cálculo a cada linha ou coluna de um data frame ou para grupos distintos.</p>
+<p><em>Observação</em>: o mesmo raciocínio servese aplica a objetos do tipo <code>matrix</code>.</p>
+<p>Observe por exemplo se extraímos a média aritmética da coluna <code>pH</code> (<span class="math inline">\(\times\)</span> 10).</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="manipulacao.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dbenv<span class="sc">$</span>pH)  <span class="co"># média aritmética</span></span></code></pre></div>
+<pre><code>## [1] 80.5</code></pre>
+<div id="função-tapply" class="section level4 unnumbered">
+<h4>Função <code>tapply</code></h4>
+<p>Podemos estar interessados em extrair as médias para <strong>cada categoria</strong> de elevação. A função <code>tapply()</code> é útil nestas situações.</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="manipulacao.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(dbenv<span class="sc">$</span>pH, dbenv<span class="sc">$</span>trecho, mean)</span></code></pre></div>
+<pre><code>##    Baixo    Medio     Alto 
+## 80.27273 81.22222 80.10000</code></pre>
+<p>A função acima, pode ser <em>lida</em> do modo:</p>
+<ul>
+<li>Selecione a coluna <code>pH</code>;</li>
+<li>Agrupe os elementos em função dos níveis em <code>trecho</code> (Baixo, Medio, Alto);</li>
+<li>Calcule a média aritmética para cada sub-grupo.</li>
+</ul>
+<p>Note que o resultado foi um vetor em que cada elemento corresponde à média de um sub-grupo. Funções que retornam mais de um valor resultam em um objeto no formato de <code>lista</code>. A função <code>range()</code> por exemplo, retorna dois valores (mínimo e máximo). Ao utilizá-la junto à função <code>tapply()</code> termos como resultado uma lista composta por um vetor para cada subgrupo.</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="manipulacao.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(dbenv<span class="sc">$</span>pH, dbenv<span class="sc">$</span>trecho, range)</span></code></pre></div>
+<pre><code>## $Baixo
+## [1] 78 83
+## 
+## $Medio
+## [1] 79 86
+## 
+## $Alto
+## [1] 77 83</code></pre>
+</div>
+<div id="função-apply" class="section level4 unnumbered">
+<h4>Função <code>apply</code></h4>
+<p>Podemos aplicar uma determinada função a todas as linhas ou colunas de um data frame (ou matriz).</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="manipulacao.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(dbenv[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">MARGIN =</span> <span class="dv">2</span>, mean)</span></code></pre></div>
+<pre><code>##         dfs         alt         slo         flo          pH 
+## 1879.033333  481.500000    2.757733 2220.100000   80.500000</code></pre>
+<p>O argumento <code>MARGIN = 2</code> diz que desejamos aplicar a função ás colunas da matriz. Com <code>MARGIN = 1</code> aplicamos a função às linhas da matriz.</p>
+</div>
+<div id="função-lapply" class="section level4 unnumbered">
+<h4>Função <code>lapply</code></h4>
+<p>Se o objeto é do formato <code>lista</code>, o comando <code>lapply()</code> aplica uma função a cada elemento da lista. Considere a lista:</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="manipulacao.html#cb236-1" aria-hidden="true" tabindex="-1"></a>nossalista <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Ilha =</span> <span class="fu">c</span>(<span class="st">&quot;Ilhabela&quot;</span>, <span class="st">&quot;Anchieta&quot;</span>, <span class="st">&quot;Cardoso&quot;</span>), </span>
+<span id="cb236-2"><a href="manipulacao.html#cb236-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Areaskm2 =</span> <span class="fu">c</span>(<span class="fl">347.5</span>, <span class="fl">8.3</span>, <span class="dv">131</span>), </span>
+<span id="cb236-3"><a href="manipulacao.html#cb236-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Bioma =</span> <span class="fu">rep</span>(<span class="st">&quot;Mata Atlantica&quot;</span>,<span class="dv">3</span>),</span>
+<span id="cb236-4"><a href="manipulacao.html#cb236-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Lat =</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">25</span>, <span class="dv">23</span>),</span>
+<span id="cb236-5"><a href="manipulacao.html#cb236-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Long =</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">47</span>, <span class="dv">45</span>))</span></code></pre></div>
+<p>Veja os resultados dos comandos abaixo:</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="manipulacao.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(nossalista, sort)</span></code></pre></div>
+<pre><code>## $Ilha
+## [1] &quot;Anchieta&quot; &quot;Cardoso&quot;  &quot;Ilhabela&quot;
+## 
+## $Areaskm2
+## [1]   8.3 131.0 347.5
+## 
+## $Bioma
+## [1] &quot;Mata Atlantica&quot; &quot;Mata Atlantica&quot; &quot;Mata Atlantica&quot;
+## 
+## $Lat
+## [1] 23 23 25
+## 
+## $Long
+## [1] 45 45 47</code></pre>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="manipulacao.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(nossalista, sort)</span></code></pre></div>
+<pre><code>## $Ilha
+## [1] &quot;Anchieta&quot; &quot;Cardoso&quot;  &quot;Ilhabela&quot;
+## 
+## $Areaskm2
+## [1]   8.3 131.0 347.5
+## 
+## $Bioma
+## [1] &quot;Mata Atlantica&quot; &quot;Mata Atlantica&quot; &quot;Mata Atlantica&quot;
+## 
+## $Lat
+## [1] 23 23 25
+## 
+## $Long
+## [1] 45 45 47</code></pre>
+<p>Obs.: Existem oitras funções neste grupo, Veja o <code>help()</code> destas funções pois são extremamente úteis na manipulação de data frames e listas.</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="manipulacao.html#cb241-1" aria-hidden="true" tabindex="-1"></a>?tapply</span>
+<span id="cb241-2"><a href="manipulacao.html#cb241-2" aria-hidden="true" tabindex="-1"></a>?apply</span>
+<span id="cb241-3"><a href="manipulacao.html#cb241-3" aria-hidden="true" tabindex="-1"></a>?lapply</span>
+<span id="cb241-4"><a href="manipulacao.html#cb241-4" aria-hidden="true" tabindex="-1"></a>?mapply</span>
+<span id="cb241-5"><a href="manipulacao.html#cb241-5" aria-hidden="true" tabindex="-1"></a>?replicate</span></code></pre></div>
+</div>
+</div>
+<div id="função-aggregate" class="section level3" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Função <code>aggregate</code></h3>
+<p>A função <code>tapply()</code> aplica uma função a subgrupos de uma <strong>única</strong> coluna. A função <code>aggregate()</code> faz o mesmo, porém para <strong>multiplas</strong> colunas agrupadas de acordo com uma ou mais categorias. O comando abaixo calcula os valores médios das variáveis para os trechos alto, médio e baixo combinmados com níveis acima e abaixo de pH = 80.</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="manipulacao.html#cb242-1" aria-hidden="true" tabindex="-1"></a>media.trecho <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(dbenv[, <span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>], </span>
+<span id="cb242-2"><a href="manipulacao.html#cb242-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">by =</span> <span class="fu">list</span>(<span class="at">TRECHO =</span> dbenv<span class="sc">$</span>trecho,</span>
+<span id="cb242-3"><a href="manipulacao.html#cb242-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">ALCALINO =</span> dbenv<span class="sc">$</span>pH <span class="sc">&gt;=</span> <span class="dv">80</span>),</span>
+<span id="cb242-4"><a href="manipulacao.html#cb242-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">FUN =</span> mean)</span>
+<span id="cb242-5"><a href="manipulacao.html#cb242-5" aria-hidden="true" tabindex="-1"></a>media.trecho</span></code></pre></div>
+<pre><code>##   TRECHO ALCALINO      dfs      alt      slo       flo       pH      har
+## 1  Baixo    FALSE 3472.250 222.5000 1.982000 4317.5000 78.75000 97.25000
+## 2  Medio    FALSE 1324.000 477.0000 2.833000 2000.0000 79.00000 86.00000
+## 3   Alto    FALSE  439.000 799.0000 4.759333  456.6667 78.33333 62.33333
+## 4  Baixo     TRUE 3402.286 228.5714 1.986571 3786.5714 81.14286 95.57143
+## 5  Medio     TRUE 1754.625 393.3750 2.501500 2206.2500 81.50000 91.50000
+## 6   Alto     TRUE  284.000 847.7143 3.396429  258.1429 80.85714 74.28571
+##         pho       nit        amm       oxy      bdo
+## 1 157.50000 325.50000 57.5000000  70.75000 84.75000
+## 2   4.00000  50.00000  0.0000000 122.00000 30.00000
+## 3   9.00000  36.66667  0.3333333 108.00000 41.00000
+## 4  92.42857 274.57143 39.7142857  77.71429 73.57143
+## 5  31.62500 165.62500  7.5000000 111.62500 30.50000
+## 6  16.00000  36.14286  8.4285714  93.00000 40.57143</code></pre>
+</div>
+</div>
+<div id="exportando-um-data-frame" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Exportando um data frame</h2>
+<p>Finalmente, podemos exportar um resultado para arquivos texto. Vamos exportar o data frame <code>media.trecho</code> obtido acima para um arquivo <code>.csv</code>.</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="manipulacao.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(media.trecho, <span class="at">file =</span> <span class="st">&quot;Mediaportecho.csv&quot;</span>, </span>
+<span id="cb244-2"><a href="manipulacao.html#cb244-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="at">dec =</span> <span class="st">&#39;.&#39;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb244-3"><a href="manipulacao.html#cb244-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<ul>
+<li>Veja o <code>help()</code> sobre a função <code>write.table</code> para mais informações.</li>
+<li>O arquivo será salvo em seu diretório de trabalho, aquele que você definiu no início desta seção com o comando <code>setwd()</code>.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualizacao.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["IntroR.pdf", "IntroR.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

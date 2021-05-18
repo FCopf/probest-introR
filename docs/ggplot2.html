@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 8 Um gráfico em camadas: o pacote ggplot2 | Introdução ao Ambiente R de Programação</title>
+  <meta name="description" content="Capítulo 8 Um gráfico em camadas: o pacote ggplot2 | Introdução ao Ambiente R de Programação" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 8 Um gráfico em camadas: o pacote ggplot2 | Introdução ao Ambiente R de Programação" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Capítulo 8 Um gráfico em camadas: o pacote ggplot2 | Introdução ao Ambiente R de Programação" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 8 Um gráfico em camadas: o pacote ggplot2 | Introdução ao Ambiente R de Programação" />
+  
+  <meta name="twitter:description" content="Capítulo 8 Um gráfico em camadas: o pacote ggplot2 | Introdução ao Ambiente R de Programação" />
+  
+
+<meta name="author" content="Fabio Cop" />
+<meta name="author" content="fabiocopf@gmail.com" />
+<meta name="author" content="Instituto do Mar, Universidade Federal de São Paulo" />
+
+
+<meta name="date" content="2021-05-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="format.html"/>
+
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">"Introdução ao Ambiente R de Programação"</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Apresentação</a></li>
+<li class="part"><span><b>I Fundamentos de programação em R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introdução ao programa R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalação-do-r"><i class="fa fa-check"></i><b>1.1</b> Instalação do R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#interface-de-desenvolvimento-ide"><i class="fa fa-check"></i><b>1.2</b> Interface de desenvolvimento (IDE)</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#o-r-para-cálculos-aritméticos"><i class="fa fa-check"></i><b>1.3</b> O R para cálculos aritméticos</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#atribuição-de-valores"><i class="fa fa-check"></i><b>1.4</b> Atribuição de valores</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#estruturas-de-dados"><i class="fa fa-check"></i><b>1.5</b> Estruturas de dados</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="intro.html"><a href="intro.html#vetores-numéricos"><i class="fa fa-check"></i><b>1.5.1</b> Vetores numéricos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="intro.html"><a href="intro.html#vetores-alfanuméricos"><i class="fa fa-check"></i><b>1.5.2</b> Vetores alfanuméricos</a></li>
+<li class="chapter" data-level="1.5.3" data-path="intro.html"><a href="intro.html#unindo-vetores-comando-paste"><i class="fa fa-check"></i><b>1.5.3</b> Unindo vetores: comando paste</a></li>
+<li class="chapter" data-level="1.5.4" data-path="intro.html"><a href="intro.html#fatores"><i class="fa fa-check"></i><b>1.5.4</b> Fatores</a></li>
+<li class="chapter" data-level="1.5.5" data-path="intro.html"><a href="intro.html#matrizes"><i class="fa fa-check"></i><b>1.5.5</b> Matrizes</a></li>
+<li class="chapter" data-level="1.5.6" data-path="intro.html"><a href="intro.html#data-frames"><i class="fa fa-check"></i><b>1.5.6</b> Data frames</a></li>
+<li class="chapter" data-level="1.5.7" data-path="intro.html"><a href="intro.html#listas"><i class="fa fa-check"></i><b>1.5.7</b> Listas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#operadores-relacionais"><i class="fa fa-check"></i><b>1.6</b> Operadores relacionais</a></li>
+<li class="chapter" data-level="1.7" data-path="intro.html"><a href="intro.html#operadores-lógicos"><i class="fa fa-check"></i><b>1.7</b> Operadores lógicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manipulacao.html"><a href="manipulacao.html"><i class="fa fa-check"></i><b>2</b> (Básico da) Manipulação de data frames</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manipulacao.html"><a href="manipulacao.html#iniciando-uma-seção-de-trabalho"><i class="fa fa-check"></i><b>2.1</b> Iniciando uma seção de trabalho</a></li>
+<li class="chapter" data-level="2.2" data-path="manipulacao.html"><a href="manipulacao.html#importando-arquivos-.csv"><i class="fa fa-check"></i><b>2.2</b> Importando arquivos <code>.csv</code></a></li>
+<li class="chapter" data-level="2.3" data-path="manipulacao.html"><a href="manipulacao.html#seleção-de-linhas-e-colunas-em-data-frames"><i class="fa fa-check"></i><b>2.3</b> Seleção de linhas e colunas em data frames</a></li>
+<li class="chapter" data-level="2.4" data-path="manipulacao.html"><a href="manipulacao.html#adicionando-novas-colunas-a-um-data-frame"><i class="fa fa-check"></i><b>2.4</b> Adicionando novas colunas a um data frame</a></li>
+<li class="chapter" data-level="2.5" data-path="manipulacao.html"><a href="manipulacao.html#aplicando-uma-função-às-linhas-ou-colunas-de-um-data-frame"><i class="fa fa-check"></i><b>2.5</b> Aplicando uma função às linhas ou colunas de um data frame</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manipulacao.html"><a href="manipulacao.html#família-de-funções-apply"><i class="fa fa-check"></i><b>2.5.1</b> Família de funções <code>apply</code></a></li>
+<li class="chapter" data-level="2.5.2" data-path="manipulacao.html"><a href="manipulacao.html#função-aggregate"><i class="fa fa-check"></i><b>2.5.2</b> Função <code>aggregate</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manipulacao.html"><a href="manipulacao.html#exportando-um-data-frame"><i class="fa fa-check"></i><b>2.6</b> Exportando um data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualizacao.html"><a href="visualizacao.html"><i class="fa fa-check"></i><b>3</b> (Básico da) Visualização gráfica: pacote <code>graphics</code></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualizacao.html"><a href="visualizacao.html#doubs-river-dataset"><i class="fa fa-check"></i><b>3.1</b> Doubs river dataset</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visualizacao.html"><a href="visualizacao.html#instalando-o-pacote-ade4-e-carregando-os-dados"><i class="fa fa-check"></i><b>3.1.1</b> Instalando o pacote <code>ade4</code> e carregando os dados</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visualizacao.html"><a href="visualizacao.html#descrevendo-os-padrões-de-uma-variável"><i class="fa fa-check"></i><b>3.2</b> Descrevendo os padrões de uma variável</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-barras"><i class="fa fa-check"></i><b>3.2.1</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="3.2.2" data-path="visualizacao.html"><a href="visualizacao.html#histograma"><i class="fa fa-check"></i><b>3.2.2</b> Histograma</a></li>
+<li class="chapter" data-level="3.2.3" data-path="visualizacao.html"><a href="visualizacao.html#boxplot"><i class="fa fa-check"></i><b>3.2.3</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="visualizacao.html"><a href="visualizacao.html#visualizando-associações-entre-duas-variáveis"><i class="fa fa-check"></i><b>3.3</b> Visualizando associações entre duas variáveis</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-barras-1"><i class="fa fa-check"></i><b>3.3.1</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="3.3.2" data-path="visualizacao.html"><a href="visualizacao.html#boxplot-1"><i class="fa fa-check"></i><b>3.3.2</b> Boxplot</a></li>
+<li class="chapter" data-level="3.3.3" data-path="visualizacao.html"><a href="visualizacao.html#gráfico-de-dispersão"><i class="fa fa-check"></i><b>3.3.3</b> Gráfico de dispersão</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="visualizacao.html"><a href="visualizacao.html#compreendendo-o-ambiente-por-meio-de-suas-variáveis"><i class="fa fa-check"></i><b>3.4</b> Compreendendo o ambiente por meio de suas variáveis</a></li>
+<li class="chapter" data-level="3.5" data-path="visualizacao.html"><a href="visualizacao.html#mais-um-comentário-sobre-formatação-gráfica-no-r"><i class="fa fa-check"></i><b>3.5</b> Mais um comentário sobre formatação gráfica no R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="visualizacao.html"><a href="visualizacao.html#outros-argumentos"><i class="fa fa-check"></i><b>3.5.1</b> Outros argumentos</a></li>
+<li class="chapter" data-level="3.5.2" data-path="visualizacao.html"><a href="visualizacao.html#figuras-compostas"><i class="fa fa-check"></i><b>3.5.2</b> Figuras compostas</a></li>
+<li class="chapter" data-level="3.5.3" data-path="visualizacao.html"><a href="visualizacao.html#exportando-figuras-com-as-funções-png-tiff-jpeg-e-bmp"><i class="fa fa-check"></i><b>3.5.3</b> Exportando figuras com as funções <code>png</code>, <code>tiff</code>, <code>jpeg</code> e <code>bmp</code></a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Uma coleção integrada de pacotes para ciência de dados</b></span></li>
+<li class="chapter" data-level="4" data-path="tidy.html"><a href="tidy.html"><i class="fa fa-check"></i><b>4</b> Os pacotes em <code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="tidy.html"><a href="tidy.html#instalando-os-pacotes-tidyverse"><i class="fa fa-check"></i><b>4.0.1</b> Instalando os pacotes <code>tidyverse</code></a></li>
+<li class="chapter" data-level="4.1" data-path="tidy.html"><a href="tidy.html#carregando-os-pacotes"><i class="fa fa-check"></i><b>4.1</b> Carregando os pacotes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="importe.html"><a href="importe.html"><i class="fa fa-check"></i><b>5</b> Importando/Exportando dados</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="importe.html"><a href="importe.html#ajustando-o-diretório-de-trabalho"><i class="fa fa-check"></i><b>5.1</b> Ajustando o diretório de trabalho</a></li>
+<li class="chapter" data-level="5.2" data-path="importe.html"><a href="importe.html#importando-dados-em-arquvos-de-texto"><i class="fa fa-check"></i><b>5.2</b> Importando dados em arquvos de texto</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>6</b> Operador Pipe</a></li>
+<li class="chapter" data-level="7" data-path="format.html"><a href="format.html"><i class="fa fa-check"></i><b>7</b> Manipulação e formatação de dados</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="format.html"><a href="format.html#transformação-de-dados-os-pacotes-dplyr-e-tidyr"><i class="fa fa-check"></i><b>7.1</b> Transformação de dados: os pacotes <code>dplyr</code> e <code>tidyr</code></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="format.html"><a href="format.html#ordenando-as-linhas-funções-arrange-e-desc"><i class="fa fa-check"></i><b>7.1.1</b> Ordenando as linhas: funções <code>arrange()</code> e <code>desc()</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="format.html"><a href="format.html#filtrando-linhas-função-filter"><i class="fa fa-check"></i><b>7.1.2</b> Filtrando linhas: função <code>filter()</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="format.html"><a href="format.html#selecionando-colunas-função-select"><i class="fa fa-check"></i><b>7.1.3</b> Selecionando colunas: função <code>select()</code></a></li>
+<li class="chapter" data-level="7.1.4" data-path="format.html"><a href="format.html#agrupando-tabelas-funções-do-grupo-join"><i class="fa fa-check"></i><b>7.1.4</b> Agrupando tabelas: funções do grupo <code>join</code></a></li>
+<li class="chapter" data-level="7.1.5" data-path="format.html"><a href="format.html#criando-e-modificando-colunas-função-mutate"><i class="fa fa-check"></i><b>7.1.5</b> Criando e modificando colunas: função <code>mutate()</code></a></li>
+<li class="chapter" data-level="7.1.6" data-path="format.html"><a href="format.html#unindo-colunas-função-unite"><i class="fa fa-check"></i><b>7.1.6</b> Unindo colunas: função <code>unite()</code></a></li>
+<li class="chapter" data-level="7.1.7" data-path="format.html"><a href="format.html#reformatando-tabelas-funções-spread-e-gather"><i class="fa fa-check"></i><b>7.1.7</b> Reformatando tabelas: funções <code>spread()</code> e <code>gather()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>8</b> Um gráfico em camadas: o pacote <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ggplot2.html"><a href="ggplot2.html#hubbard-brook-stream-flow"><i class="fa fa-check"></i><b>8.1</b> Hubbard Brook stream flow</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="ggplot2.html"><a href="ggplot2.html#entendendo-a-gramática-do-ggplot"><i class="fa fa-check"></i><b>8.1.1</b> Entendendo a gramática do <code>ggplot</code></a></li>
+<li class="chapter" data-level="8.1.2" data-path="ggplot2.html"><a href="ggplot2.html#outras-geometrias-gráficas"><i class="fa fa-check"></i><b>8.1.2</b> Outras <em>Geometrias</em> gráficas</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ggplot2.html"><a href="ggplot2.html#gáfico-de-dispersão"><i class="fa fa-check"></i><b>8.2</b> Gáfico de dispersão</a></li>
+<li class="chapter" data-level="8.3" data-path="ggplot2.html"><a href="ggplot2.html#boxplot-2"><i class="fa fa-check"></i><b>8.3</b> Boxplot</a></li>
+<li class="chapter" data-level="8.4" data-path="ggplot2.html"><a href="ggplot2.html#gráfico-de-linhas"><i class="fa fa-check"></i><b>8.4</b> Gráfico de linhas</a></li>
+<li class="chapter" data-level="8.5" data-path="ggplot2.html"><a href="ggplot2.html#gráfico-de-barras-2"><i class="fa fa-check"></i><b>8.5</b> Gráfico de barras</a></li>
+<li class="chapter" data-level="8.6" data-path="ggplot2.html"><a href="ggplot2.html#temas-no-ggplot2"><i class="fa fa-check"></i><b>8.6</b> Temas no <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.7" data-path="ggplot2.html"><a href="ggplot2.html#salvando-uma-figura-gerada-pelo-gglot2."><i class="fa fa-check"></i><b>8.7</b> Salvando uma figura gerada pelo <code>gglot2</code>.</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introdução ao Ambiente R de Programação</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ggplot2" class="section level1" number="8">
+<h1><span class="header-section-number">Capítulo 8</span> Um gráfico em camadas: o pacote <code>ggplot2</code></h1>
+<p>No capitulo <a href="visualizacao.html#visualizacao">3</a> vimos os tipos básicos de gráficos em R. Vamos agora rever estes gráficos utilizando o pacote <code>ggplot2</code>, mais um pacote do grupo <code>tidyverse</code>. O <code>ggplot2</code> fornece uma gramática coesa para os elementos de um gráfico, o que torna o aprendizado mais simples, rápido e os códigos mais reutilizáveis. Uma segunda vantagem é a elevada capacidade de formatação dos elementos gráficos com relativa simplicidade.</p>
+<p>Aqui veremos somente uma introdução para que você acompanhe o restante do material. Você pode buscar por <a href="https://www.google.com/search?hl=pt-BR&amp;sxsrf=ALeKk01rZWda0HD1IRGtCyelLv79_WDmkg%3A1594409577512&amp;source=hp&amp;ei=acIIX9HVG4vD5OUPgamfOA&amp;q=ggplot2+tutorial&amp;oq=ggplot2+tutorial&amp;gs_lcp=CgZwc3ktYWIQAzIECCMQJzICCAAyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeUJILWJILYJIhaABwAHgAgAF5iAF5kgEDMC4xmAEAoAECoAEBqgEHZ3dzLXdpeg&amp;sclient=psy-ab&amp;ved=0ahUKEwiRrvbDtsPqAhWLIbkGHYHUBwcQ4dUDCAc&amp;uact=5">ggplot2 tutorial</a> para encontrar uma imensa variedade de excelentes tutoriais na internet.</p>
+<p>Uma das primeiras características que devemos ter em mente é que o <code>ggplot2</code> gera gráficos a paritr da colunas de um data frame.</p>
+<p>Se ainda não o fez, instale e carrege o <code>ggplot2</code>.</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="ggplot2.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb347-2"><a href="ggplot2.html#cb347-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>Iremos utilizar também os pacotes <code>readr</code> e o <code>dplyr</code> que podem ser instalados e carregados por:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="ggplot2.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readr&quot;</span>)</span>
+<span id="cb348-2"><a href="ggplot2.html#cb348-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb348-3"><a href="ggplot2.html#cb348-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb348-4"><a href="ggplot2.html#cb348-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div id="hubbard-brook-stream-flow" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Hubbard Brook stream flow</h2>
+<p>Vamos fazer um histograma dos dados de vazão da tabela <a href="https://github.com/FCopf/estatistica-livro/blob/master/datasets/HubbardBrook.csv" target="_blank">HubbardBrook.csv</a> (dados retirados de <a href="https://tiee.esa.org/vol/v1/data_sets/hubbard/hubbard_overview.html">tiee.esa.org</a>). Veja novamente a tabela:</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="ggplot2.html#cb349-1" aria-hidden="true" tabindex="-1"></a>hub <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;C:/seu_caminho/IntroR/HubbardBrook.csv&quot;</span>)</span>
+<span id="cb349-2"><a href="ggplot2.html#cb349-2" aria-hidden="true" tabindex="-1"></a>hub</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##    Year Treatment   Flow Precipitation
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;
+## 1  1958 Deforested  645.         1168.
+## 2  1959 Deforested 1012.         1483.
+## 3  1960 Deforested  825.         1321.
+## 4  1961 Deforested  470.          980.
+## 5  1962 Deforested  777.         1232.
+## 6  1963 Deforested  774.         1139.</code></pre>
+<div id="entendendo-a-gramática-do-ggplot" class="section level3" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Entendendo a gramática do <code>ggplot</code></h3>
+<p>Considere o histograma da variável <code>Flow</code>.</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="ggplot2.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Flow)) <span class="sc">+</span></span>
+<span id="cb351-2"><a href="ggplot2.html#cb351-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-189-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>No comando existem dois tipos de informação, separadas pelo símbolo <span class="math inline">\(+\)</span>. Este símbolo marca o fim de uma camada e início da outra. No <code>ggplot()</code> cada camada adiciona um elemento novo ou formata um elemento existente no gráfico. A ordem em que as camadas são inseridas raramente importa, ainda que seja interessante inserí-las de modo que facilite a leitura do código. No exemplo acima temos as camadas gedaras por:</p>
+<ul>
+<li><code>ggplot()</code>: esta função mostra um argumento <code>data =</code>, onde informamos o nome do <code>data.frame</code> de onde serão lidos os dados (<em>No ggplot, os dados sempre devem estar dispostos dentro de um data frame</em>). No segundo argumento <code>mapping =</code>, informamos sobre a <strong>estética do gráfico</strong>. Por hora, esta estética foi limitada a <code>aes(x = Flow)</code>, dizendo que nosso gráfico irá conter no eixo <code>x</code> a variável <code>Flow</code> do data frame.</li>
+</ul>
+<p>Até este momento não definimos qual será o tipo gráfico.</p>
+<ul>
+<li>Na segunda camada estabelecemos a <strong>geometria</strong> do gráfico, neste caso composta por um histograma (<code>geom_histogram</code>), onde a cor da borda foi definida por <code>color = "blue"</code> e o preenchimento por <code>fill = "lightblue"</code>.</li>
+</ul>
+<p>Vamos adicionar algumas formatações adicionais:</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="ggplot2.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Flow)) <span class="sc">+</span></span>
+<span id="cb352-2"><a href="ggplot2.html#cb352-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb352-3"><a href="ggplot2.html#cb352-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Histograma de vazão do riacho Hubbard&quot;</span>, </span>
+<span id="cb352-4"><a href="ggplot2.html#cb352-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">bquote</span>(<span class="fu">Vazao</span> (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>s)),</span>
+<span id="cb352-5"><a href="ggplot2.html#cb352-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Contagem&quot;</span>) <span class="sc">+</span></span>
+<span id="cb352-6"><a href="ggplot2.html#cb352-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-190-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Formatamos agora o <strong>título</strong>, os nomes dos eixos <code>x</code> e <code>y</code> e centralizamos o título (<code>theme(plot.title = element_text(hjust = 0.5))</code>).</p>
+<p>Embora possa parecer muita informação de uma única vez (e de fato é), o ponto é que você não precisará decorar nenhuma delas (mas se utilizar, acabará decorando!!). Uma simples busca por <a href="https://www.google.com/search?sxsrf=ALeKk02h6lituhooE6EgHAVc2zcLsOWdLQ%3A1594404890952&amp;ei=GrAIX5LrOciv5OUPnfGPsA0&amp;q=centralize+title+ggplot2&amp;oq=centralize+title+ggplot2&amp;gs_lcp=CgZwc3ktYWIQAzIECCMQJzoECAAQRzoHCCMQsAIQJ1CNDFjSPGDfRGgAcAF4AIABlgGIAfkIkgEDMC45mAEAoAEBqgEHZ3dzLXdpeg&amp;sclient=psy-ab&amp;ved=0ahUKEwiS4JyJpcPqAhXIF7kGHZ34A9YQ4dUDCAw&amp;uact=5">centralize title ggplot2</a> te levará a estes comandos.</p>
+<p>No histograma anterior, a vazão foi medida anualmente em trechos Deforested e em trechos Deforested. Vamos então adicionar esta variável à <em>estética</em> (<code>aes()</code>) do gráfico, diferenciando os grupos em função da cor.</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="ggplot2.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Flow, <span class="at">color =</span> Treatment, <span class="at">fill =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb353-2"><a href="ggplot2.html#cb353-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-191-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="outras-geometrias-gráficas" class="section level3" number="8.1.2">
+<h3><span class="header-section-number">8.1.2</span> Outras <em>Geometrias</em> gráficas</h3>
+<p>Além dos histogramas temos muitas outras geometrias gráficas do tipo <code>geom_NOME()</code>. Algumas muito utilizadas são:</p>
+<ul>
+<li>geom_abline()</li>
+<li>geom_bar()</li>
+<li>geom_boxplot()</li>
+<li>geom_line()</li>
+<li>geom_point()</li>
+<li>geom_smooth()</li>
+<li>geom_text()</li>
+</ul>
+</div>
+</div>
+<div id="gáfico-de-dispersão" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Gáfico de dispersão</h2>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="ggplot2.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Precipitation, <span class="at">y =</span> Flow)) <span class="sc">+</span></span>
+<span id="cb354-2"><a href="ggplot2.html#cb354-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb354-3"><a href="ggplot2.html#cb354-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">bquote</span>(Vazão (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>s)),</span>
+<span id="cb354-4"><a href="ggplot2.html#cb354-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">bquote</span>(Precipitação (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>ano)))</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-192-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Adicionando o <code>Treatment</code> à cor do gráfico e formatando a legenda.</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="ggplot2.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Precipitation, <span class="at">y =</span> Flow, <span class="at">fill =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb355-2"><a href="ggplot2.html#cb355-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb355-3"><a href="ggplot2.html#cb355-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">bquote</span>(Vazão (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>s)),</span>
+<span id="cb355-4"><a href="ggplot2.html#cb355-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">bquote</span>(Precipitação (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>ano))) <span class="sc">+</span></span>
+<span id="cb355-5"><a href="ggplot2.html#cb355-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">&quot;Estado da área&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb355-6"><a href="ggplot2.html#cb355-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;yellow&quot;</span>))</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-193-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Adicionando um texto com informação do Ano de mensuração.</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="ggplot2.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Precipitation, <span class="at">y =</span> Flow, <span class="at">label =</span> Year</span>
+<span id="cb356-2"><a href="ggplot2.html#cb356-2" aria-hidden="true" tabindex="-1"></a>                                 , <span class="at">color =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb356-3"><a href="ggplot2.html#cb356-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb356-4"><a href="ggplot2.html#cb356-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">bquote</span>(Vazão (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>s)),</span>
+<span id="cb356-5"><a href="ggplot2.html#cb356-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">bquote</span>(Precipitação (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>ano))) <span class="sc">+</span></span>
+<span id="cb356-6"><a href="ggplot2.html#cb356-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">&quot;Estado da área&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb356-7"><a href="ggplot2.html#cb356-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-194-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="boxplot-2" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Boxplot</h2>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="ggplot2.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> Flow)) <span class="sc">+</span></span>
+<span id="cb357-2"><a href="ggplot2.html#cb357-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb357-3"><a href="ggplot2.html#cb357-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">bquote</span>(Vazão (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>s)),</span>
+<span id="cb357-4"><a href="ggplot2.html#cb357-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-195-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Vamos inverter a ordem dos boxplots.</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="ggplot2.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> Flow)) <span class="sc">+</span></span>
+<span id="cb358-2"><a href="ggplot2.html#cb358-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb358-3"><a href="ggplot2.html#cb358-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">bquote</span>(Vazão (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>s)),</span>
+<span id="cb358-4"><a href="ggplot2.html#cb358-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb358-5"><a href="ggplot2.html#cb358-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(</span>
+<span id="cb358-6"><a href="ggplot2.html#cb358-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="st">&quot;Reference&quot;</span>, <span class="st">&quot;Deforested&quot;</span>))</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-196-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="gráfico-de-linhas" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Gráfico de linhas</h2>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="ggplot2.html#cb359-1" aria-hidden="true" tabindex="-1"></a>hub <span class="sc">%&gt;%</span> </span>
+<span id="cb359-2"><a href="ggplot2.html#cb359-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Treatment <span class="sc">==</span> <span class="st">&quot;Deforested&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb359-3"><a href="ggplot2.html#cb359-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Flow)) <span class="sc">+</span></span>
+<span id="cb359-4"><a href="ggplot2.html#cb359-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb359-5"><a href="ggplot2.html#cb359-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">bquote</span>(Vazão (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>s)),</span>
+<span id="cb359-6"><a href="ggplot2.html#cb359-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Ano&quot;</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-197-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Na figura, utilizamos o operador <strong>pipe</strong>, e a função <code>filter()</code> para extrair somente as linhas do riacho desmatado. Vamos adicionar os dois riachos.</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="ggplot2.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Flow, <span class="at">color =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb360-2"><a href="ggplot2.html#cb360-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb360-3"><a href="ggplot2.html#cb360-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">bquote</span>(Vazão (m<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span>s)),</span>
+<span id="cb360-4"><a href="ggplot2.html#cb360-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Ano&quot;</span>)</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-198-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="gráfico-de-barras-2" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Gráfico de barras</h2>
+<p>Vamos criar uma variável categórica <code>Vazao_cat</code> contendo os níveis <code>Extrema</code> (se <code>Flow</code> <span class="math inline">\(&gt;= 1000 m^3/s\)</span>) e <code>Normal</code> caso contrário. Em seguida vamos contar o número de observações com vazão extrema.</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="ggplot2.html#cb361-1" aria-hidden="true" tabindex="-1"></a>extremo <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb361-2"><a href="ggplot2.html#cb361-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb361-3"><a href="ggplot2.html#cb361-3" aria-hidden="true" tabindex="-1"></a>hub <span class="sc">%&gt;%</span> </span>
+<span id="cb361-4"><a href="ggplot2.html#cb361-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Vazao_cat =</span> <span class="fu">ifelse</span>(Flow <span class="sc">&gt;=</span> extremo, </span>
+<span id="cb361-5"><a href="ggplot2.html#cb361-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">yes =</span> <span class="st">&quot;Extrema&quot;</span>, </span>
+<span id="cb361-6"><a href="ggplot2.html#cb361-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">no =</span> <span class="st">&quot;Normal&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb361-7"><a href="ggplot2.html#cb361-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Vazao_cat)) <span class="sc">+</span></span>
+<span id="cb361-8"><a href="ggplot2.html#cb361-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-199-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Se dissermos que a variável está em <code>y</code> (<code>aes(y = Vazao_cat)</code>) o gráfico fica na horizontal.</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="ggplot2.html#cb362-1" aria-hidden="true" tabindex="-1"></a>hub <span class="sc">%&gt;%</span> </span>
+<span id="cb362-2"><a href="ggplot2.html#cb362-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Vazao_cat =</span> <span class="fu">ifelse</span>(Flow <span class="sc">&gt;=</span> extremo, <span class="at">yes =</span> <span class="st">&quot;Extrema&quot;</span>, <span class="at">no =</span> <span class="st">&quot;Normal&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb362-3"><a href="ggplot2.html#cb362-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> Vazao_cat)) <span class="sc">+</span></span>
+<span id="cb362-4"><a href="ggplot2.html#cb362-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-200-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="temas-no-ggplot2" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Temas no <code>ggplot2</code></h2>
+<p>Embora possamos formatar todos os elementos gráficos, o <code>ggplot2</code> vem com temas pré-formatados que facilita este processo. Vejamos alguns. Para escolher um tema adicionamos uma camada com seu nome (<code>theme_NOME()</code>). Veja o exemplo:</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="ggplot2.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Flow, <span class="at">color =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb363-2"><a href="ggplot2.html#cb363-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb363-3"><a href="ggplot2.html#cb363-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-201-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Os temas básicos estão exemplificados abaixo. Além destes, o pacote <a href="https://cran.r-project.org/web/packages/ggthemes/index.html"><code>ggthemes</code></a> oferece uma extensa variedade de outras formatações.</p>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-202-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="salvando-uma-figura-gerada-pelo-gglot2." class="section level2" number="8.7">
+<h2><span class="header-section-number">8.7</span> Salvando uma figura gerada pelo <code>gglot2</code>.</h2>
+<p>Uma forma simples de salvar um gráfico gerados pelo <code>gglot2</code> é utilizando a função <a href="https://ggplot2.tidyverse.org/reference/ggsave.html"><code>ggsave()</code></a>.</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="ggplot2.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hub, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Flow, <span class="at">color =</span> Treatment)) <span class="sc">+</span></span>
+<span id="cb364-2"><a href="ggplot2.html#cb364-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb364-3"><a href="ggplot2.html#cb364-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb364-4"><a href="ggplot2.html#cb364-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb364-5"><a href="ggplot2.html#cb364-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;Exemplo_ggsave.png&quot;</span>, </span>
+<span id="cb364-6"><a href="ggplot2.html#cb364-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>,</span>
+<span id="cb364-7"><a href="ggplot2.html#cb364-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">20</span>, </span>
+<span id="cb364-8"><a href="ggplot2.html#cb364-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">20</span>,</span>
+<span id="cb364-9"><a href="ggplot2.html#cb364-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>,</span>
+<span id="cb364-10"><a href="ggplot2.html#cb364-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">480</span>)  </span></code></pre></div>
+<p><img src="IntroR_files/figure-html/unnamed-chunk-204-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Por padrão a função <code>ggsave()</code> salva o ultimo gráfico criado. Porém se existe um objeto salvo, você pode especificá-lo com o argumento <code>plot = objeto_grafico</code>.</p>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Borcard, Daniel, François Gillet, and Pierre Legendre. 2018. <em>Numerical Ecology with r</em>. Springer.
+</div>
+<div class="csl-entry">
+Dray, S, AB Dufour, and J Thioulouse. 2015. <span>“Ade 4: Analysis of Ecological Data: Exploratory and Euclidean Methods in Environmental Sciences. R Package Version 1.7-2.”</span>
+</div>
+<div class="csl-entry">
+Verneaux, J. 1973. <span>“Cours d’eau de Franche-Comté (Massif Du Jura). Recherches écologiques Sur Le réseau Hydrographique Du Doubs. Essai de Biotypologie.”</span> PhD thesis, Thèse d’état, Besançon.
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="format.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["IntroR.pdf", "IntroR.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

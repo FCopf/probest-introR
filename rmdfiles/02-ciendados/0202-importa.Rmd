@@ -1,0 +1,49 @@
+# Importando/Exportando dados {#importe}
+
+## Ajustando o diretório de trabalho
+
+Antes de apresentarmos as funções de importação e exportação de dados devemos re-lembrar as funções que nos permitem verificar e alterar o *diretório de trabalho*. Um diretório de trabalho é que o local onde o R irá buscar e salvar arquivos em seu computador. Se não for definido, o R irá utilizar o diretório base. No R-Studio você pode verificar qual é seu diretório base no menu: ```Tools --> Global Options --> R General```. 
+
+Se você estiver utilizando um **projeto** o R irá utilizar o diretório onde está o arquivo com extensão ```.Rproj``` . Uma das vantagens em utilizar *projetos* no R é a facilidade em manipular o diretório de trabalho e sub-diretórios dentro deles. Sub-diretórios dentro da pasta de um projeto podem auxiliar na organização das base de dados para importação, do material gerado como figuras, slides, arquivos ```.pdf```,  etc. No R-Studio você pode criar um projeto via menu: ```File --> New Project...```.
+
+Você pode verificar seu diretório de trabalho com a função ```getwd()```. Esta função não requer argumentos. A função ```setwd()``` é utilizada para alterar o diretório de trabalho e recebe como argumento o diretório de destino. O comando:
+
+```{r, eval=FALSE}
+getwd("C:/seu_caminho/IntroR")
+```
+
+Irá alterar o caminho de busca para esta pasta.
+
+## Importando dados em arquvos de texto
+
+O pacote responsável pela importação de dados no ```tidyverse``` é o ```readr```. Este pacote permite importar arquivos de texto no formato ```.csv``` ou ```.txt```.
+
+Existem diversas funções no pacote ```readr```. Veja seu manual [Aqui](https://cran.r-project.org/web/packages/readr/index.html). A função ```read_csv()``` importa arquivos texto em que as colunas são separadas por *vírgulas*. A função ```read_tsv()``` importa arquivos texto em que as colunas são separadas por *tabulações*. Iremos ver a função ```read_delim()``` que é mais geral e permite que você especifique o tipo de separador (*delimitador*) de acordo com o padrão em seu arquivo. Os delimitadores mais comuns são *vírgulas*, *tabulações* ou *ponto-e-vírgula*.
+
+Vamos voltar ao arquivo ```doubs_environment.csv``` visto no capítulo \@ref(manipulacao). Vamos importá-lo agora utilizando a função ```read_delim()```.
+
+```{r, eval=FALSE}
+library(readr)
+```
+
+
+```{r, echo = FALSE, message = FALSE}
+dbenv = read_delim(file = "datasets/dbenv.csv", delim = ",")
+```
+
+
+```{r, eval = FALSE, message = FALSE}
+dbenv = read_delim(file = "C:/seu_caminho/IntroR/dbenv.csv", delim = ",")
+```
+
+verifique o objeto importado.
+
+```{r}
+dbenv
+```
+
+O objeto é do tipo ```tibble``` com `r nrow(dbenv)` linhas por `r ncol(dbenv)` colunas. Note que dependendo do tamanho de sua janela, nem todas as linhas e colunas irão aparecer, porém será indicado as linhas e colunas ocultas.
+
+```{r, echo=FALSE}
+rm(list = ls())
+```

@@ -1,0 +1,58 @@
+--- 
+title: "Introdução ao Ambiente R de Programação"
+author: 
+  - Fabio Cop
+  - fabiocopf@gmail.com
+  - Instituto do Mar, Universidade Federal de São Paulo
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "Introdução ao Ambiente R de Programação"
+---
+
+# Apresentação {-}
+
+Este é um material de introdução sobre o ambiente de programação R. O material está dividido em duas partes: I. Fundamentos de programação em R (capítulos \@ref(intro) a \@ref(visualizacao)) e II. Uma coleção integrada de pacotes para ciência de dados (capítulos \@ref(tidy) a \@ref(ggplot2)).
+
+
+```{r include=FALSE, fig.width=5, fig.align='center'}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+
+```
+
+```{r setupP1, include=FALSE, message = FALSE, echo = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(vegan)
+library(ade4)
+
+library(versions)
+library(magick)
+
+library(tidyverse)
+library(lubridate)
+library(ggVennDiagram)
+
+library(knitr)
+library(grid)
+library(gridExtra)
+library(DT)
+
+require(reshape2)
+library(DiagrammeR)
+
+library(plotrix)
+library(circlize)
+
+
+
+```
+
+

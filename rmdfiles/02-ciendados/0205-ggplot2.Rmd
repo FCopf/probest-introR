@@ -1,0 +1,292 @@
+# Um gráfico em camadas: o pacote ```ggplot2``` {#ggplot2}
+
+No capitulo \@ref(visualizacao) vimos os tipos básicos de gráficos em R. Vamos agora rever estes gráficos utilizando o pacote ```ggplot2```, mais um pacote do grupo ```tidyverse```. O ```ggplot2``` fornece uma gramática coesa para os elementos de um gráfico, o que torna o aprendizado mais simples, rápido e os códigos mais reutilizáveis. Uma segunda vantagem é a elevada capacidade de formatação dos elementos gráficos com relativa simplicidade. 
+
+Aqui veremos somente uma introdução para que você acompanhe o restante do material. Você pode buscar por [ggplot2 tutorial](https://www.google.com/search?hl=pt-BR&sxsrf=ALeKk01rZWda0HD1IRGtCyelLv79_WDmkg%3A1594409577512&source=hp&ei=acIIX9HVG4vD5OUPgamfOA&q=ggplot2+tutorial&oq=ggplot2+tutorial&gs_lcp=CgZwc3ktYWIQAzIECCMQJzICCAAyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeUJILWJILYJIhaABwAHgAgAF5iAF5kgEDMC4xmAEAoAECoAEBqgEHZ3dzLXdpeg&sclient=psy-ab&ved=0ahUKEwiRrvbDtsPqAhWLIbkGHYHUBwcQ4dUDCAc&uact=5) para encontrar uma imensa variedade de excelentes tutoriais na internet.
+
+Uma das primeiras características que devemos ter em mente é que o ```ggplot2``` gera gráficos a paritr da colunas de um data frame.
+
+Se ainda não o fez, instale e carrege o ```ggplot2```.
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+Iremos utilizar também os pacotes ```readr``` e o ```dplyr``` que podem ser instalados e carregados por:
+
+```{r, eval=FALSE}
+install.packages("readr")
+install.packages("dplyr")
+library(readr)
+library(dplyr)
+```
+ 
+## Hubbard Brook stream flow
+
+Vamos fazer um histograma dos dados de vazão da tabela <a href="https://github.com/FCopf/estatistica-livro/blob/master/datasets/HubbardBrook.csv" target="_blank">HubbardBrook.csv</a> (dados retirados de [tiee.esa.org](https://tiee.esa.org/vol/v1/data_sets/hubbard/hubbard_overview.html)). Veja novamente a tabela:
+
+```{r, eval  = FALSE}
+hub = read_csv("C:/seu_caminho/IntroR/HubbardBrook.csv")
+hub
+```
+
+```{r, echo  = FALSE, message=FALSE}
+hub = read_csv("datasets/HubbardBrook.csv")
+head(hub)
+```
+
+### Entendendo a gramática do ```ggplot```
+
+Considere o histograma da variável ```Flow```.
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(data = hub, mapping = aes(x = Flow)) +
+  geom_histogram(color = "blue", fill = "lightblue")
+```
+
+No comando existem dois tipos de informação, separadas pelo símbolo $+$. Este símbolo marca o fim de uma camada e início da outra. No ```ggplot()``` cada camada adiciona um elemento novo ou formata um elemento existente no gráfico. A ordem em que as camadas são inseridas raramente importa, ainda que seja interessante inserí-las de modo que facilite a leitura do código. No exemplo acima temos as camadas gedaras por:
+
+- ```ggplot()```: esta função mostra um argumento ```data =```, onde informamos o nome do ```data.frame``` de onde serão lidos os dados (*No ggplot, os dados sempre devem estar dispostos dentro de um data frame*). No segundo argumento ```mapping = ```, informamos sobre a **estética do gráfico**. Por hora, esta estética foi limitada a ```aes(x = Flow)```, dizendo que nosso gráfico irá conter no eixo ```x``` a variável ```Flow``` do data frame.
+
+Até este momento não definimos qual será o tipo gráfico.
+
+- Na segunda camada estabelecemos a **geometria** do gráfico, neste caso composta por um histograma (```geom_histogram```), onde a cor da borda foi definida por ```color = "blue"``` e o preenchimento por ```fill = "lightblue"```.
+
+Vamos adicionar algumas formatações adicionais:
+
+```{r, message = FALSE, message = FALSE, fig.align="center", fig.width=7}
+ggplot(data = hub, mapping = aes(x = Flow)) +
+  geom_histogram(color = "blue", fill = "lightblue") +
+  labs(title = "Histograma de vazão do riacho Hubbard", 
+       x = bquote(Vazao (m^3/s)),
+       y = "Contagem") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+Formatamos agora o **título**, os nomes dos eixos ```x``` e ```y``` e centralizamos o título (```theme(plot.title = element_text(hjust = 0.5))```).
+
+Embora possa parecer muita informação de uma única vez (e de fato é), o ponto é que você não precisará decorar nenhuma delas (mas se utilizar, acabará decorando!!). Uma simples busca por [centralize title ggplot2](https://www.google.com/search?sxsrf=ALeKk02h6lituhooE6EgHAVc2zcLsOWdLQ%3A1594404890952&ei=GrAIX5LrOciv5OUPnfGPsA0&q=centralize+title+ggplot2&oq=centralize+title+ggplot2&gs_lcp=CgZwc3ktYWIQAzIECCMQJzoECAAQRzoHCCMQsAIQJ1CNDFjSPGDfRGgAcAF4AIABlgGIAfkIkgEDMC45mAEAoAEBqgEHZ3dzLXdpeg&sclient=psy-ab&ved=0ahUKEwiS4JyJpcPqAhXIF7kGHZ34A9YQ4dUDCAw&uact=5) te levará a estes comandos. 
+
+No histograma anterior, a vazão foi medida anualmente em trechos `r levels(factor(hub$Treatment))[1]` e em trechos `r levels(factor(hub$Treatment))[1]`. Vamos então adicionar esta variável à *estética* (```aes()```) do gráfico, diferenciando os grupos em função da cor.
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(data = hub, mapping = aes(x = Flow, color = Treatment, fill = Treatment)) +
+  geom_histogram(alpha = 0.5)
+```
+
+### Outras *Geometrias* gráficas
+
+Além dos histogramas temos muitas outras geometrias gráficas do tipo ```geom_NOME()```. Algumas muito utilizadas são:
+
+- geom_abline()
+- geom_bar()
+- geom_boxplot()
+- geom_line()
+- geom_point()
+- geom_smooth()
+- geom_text()
+
+## Gáfico de dispersão
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(data = hub, mapping = aes(x = Precipitation, y = Flow)) +
+  geom_point(shape = 21) +
+  labs(y = bquote(Vazão (m^3/s)),
+       x = bquote(Precipitação (m^3/ano)))
+```
+
+
+Adicionando o ```Treatment``` à cor do gráfico e formatando a legenda.
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(data = hub, mapping = aes(x = Precipitation, y = Flow, fill = Treatment)) +
+  geom_point(shape = 21, size = 3) +
+  labs(y = bquote(Vazão (m^3/s)),
+       x = bquote(Precipitação (m^3/ano))) +
+  guides(fill=guide_legend(title="Estado da área")) +
+  scale_fill_manual(values = c("blue", "yellow"))
+```
+
+Adicionando um texto com informação do Ano de mensuração.
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(data = hub, mapping = aes(x = Precipitation, y = Flow, label = Year
+                                 , color = Treatment)) +
+  geom_text(size = 3) +
+  labs(y = bquote(Vazão (m^3/s)),
+       x = bquote(Precipitação (m^3/ano))) +
+  guides(color=guide_legend(title="Estado da área")) +
+  scale_color_manual(values = c("blue", "red"))
+```
+
+## Boxplot
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(data = hub, mapping = aes(x = Treatment, y = Flow)) +
+  geom_boxplot() +
+  labs(y = bquote(Vazão (m^3/s)),
+       x = "")
+```
+
+Vamos inverter a ordem dos boxplots.
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(data = hub, mapping = aes(x = Treatment, y = Flow)) +
+  geom_boxplot() +
+  labs(y = bquote(Vazão (m^3/s)),
+       x = "") +
+  scale_x_discrete(
+    limits = c("Reference", "Deforested"))
+
+```
+
+## Gráfico de linhas
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+hub %>% 
+  filter(Treatment == "Deforested") %>% 
+  ggplot(mapping = aes(x = Year, y = Flow)) +
+    geom_line() +
+    labs(y = bquote(Vazão (m^3/s)),
+         x = "Ano")
+```
+
+Na figura, utilizamos o operador **pipe**, e a função ```filter()``` para extrair somente as linhas do riacho desmatado. Vamos adicionar os dois riachos.
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  labs(y = bquote(Vazão (m^3/s)),
+         x = "Ano")
+```
+
+## Gráfico de barras
+
+Vamos criar uma variável categórica ```Vazao_cat``` contendo os níveis ```Extrema``` (se ```Flow``` $>= 1000 m^3/s$) e ```Normal``` caso contrário. Em seguida vamos contar o número de observações com vazão extrema.
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+extremo <- 1000
+
+hub %>% 
+  mutate(Vazao_cat = ifelse(Flow >= extremo, 
+                            yes = "Extrema", 
+                            no = "Normal")) %>% 
+  ggplot(mapping = aes(x = Vazao_cat)) +
+  geom_bar()
+```
+
+Se dissermos que a variável está em ```y``` (```aes(y = Vazao_cat)```) o gráfico fica na horizontal.
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+hub %>% 
+  mutate(Vazao_cat = ifelse(Flow >= extremo, yes = "Extrema", no = "Normal")) %>% 
+  ggplot(mapping = aes(y = Vazao_cat)) +
+  geom_bar()
+```
+
+## Temas no ```ggplot2```
+
+Embora possamos formatar todos os elementos gráficos, o ```ggplot2``` vem com temas pré-formatados que facilita este processo. Vejamos alguns. Para escolher um tema adicionamos uma camada com seu nome (```theme_NOME()```). Veja o exemplo:
+
+```{r, message = FALSE, fig.align="center", fig.width=7}
+ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_classic()
+  
+```
+
+Os temas básicos estão exemplificados abaixo. Além destes, o pacote [```ggthemes```](https://cran.r-project.org/web/packages/ggthemes/index.html) oferece uma extensa variedade de outras formatações.
+
+```{r,echo = FALSE, message = FALSE, fig.align="center", fig.width=10, fig.height=20}
+g1 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_grey() +
+  labs(title = "theme_grey()")
+
+g2 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_gray() +
+  labs(title = "theme_gray()")
+  
+g3 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_bw() +
+  labs(title = "theme_bw()")
+
+g4 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_linedraw() +
+  labs(title = "theme_linedraw()")
+
+g5 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_light() +
+  labs(title = "theme_light()")
+
+g6 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_dark() +
+  labs(title = "theme_dark()")
+
+g7 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = "theme_minimal()")
+
+g8 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_classic() +
+  labs(title = "theme_classic()")
+
+g9 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_void() +
+  labs(title = "theme_void()")
+
+g10 <- ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_test() +
+  labs(title = "theme_test()")
+
+grid.arrange(g1, g2, g3, g4, g5,
+             g6, g7, g8, g9, g10, ncol = 2, nrow = 5)
+
+```
+
+
+## Salvando uma figura gerada pelo ```gglot2```.
+
+Uma forma simples de salvar um gráfico gerados pelo ```gglot2``` é utilizando a função [```ggsave()```](https://ggplot2.tidyverse.org/reference/ggsave.html).
+
+```{r, message = FALSE, fig.align="center", fig.width=7, eval=FALSE}
+ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_classic()
+
+ggsave(filename = "Exemplo_ggsave.png", 
+       device = "png",
+       width = 20, 
+       height = 20,
+       units = "cm",
+       dpi = 480)  
+```
+
+```{r, message = FALSE, fig.align="center", fig.width=7, echo=FALSE}
+ggplot(hub, mapping = aes(x = Year, y = Flow, color = Treatment)) +
+  geom_line() +
+  theme_classic()
+
+ggsave(filename = "figs/Exemplo_ggsave.png", 
+       device = "png",
+       width = 20, 
+       height = 20,
+       units = "cm",
+       dpi = 480)  
+```
+
+Por padrão a função ```ggsave()``` salva o ultimo gráfico criado. Porém se existe um objeto salvo, você pode especificá-lo com o argumento ```plot = objeto_grafico```.
+
+```{r, echo=FALSE}
+rm(list = ls())
+```

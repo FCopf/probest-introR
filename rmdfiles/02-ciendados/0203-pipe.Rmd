@@ -1,0 +1,64 @@
+# Operador Pipe {#pipe}
+
+O **operador pipe**  (```%>%```) é um facilitador para a manipulação e formatação de dados na filosofia *tidyverse*. O operador pipe não precisa ser utilizado somente com as funções dos pacotes do tidyverse, pode ser utilizado com qualquer função em R. Sua função é facilitar a leitura de códigos, sobretudo códigos longos de formatação de data frames. 
+
+Para utilizá-lo instale e carrege o pacote ```magrittr```:
+
+```{r, eval=FALSE}
+install.packages("magrittr")
+library(magrittr)
+```
+
+Este operador funciona fazendo com que um objeto criado ao lado esquerdo de uma expressão, seja utilizado como *entrada* de uma função escrita ao lado direito da expressão conforme:
+
+$y$ %>% $f(y)$
+
+Veja um exemplo:
+
+```{r}
+variavel <- 49
+variavel %>% sqrt()
+```
+
+O objeto ```variavel``` às esquerda de **%>%** é portanto utilizado como entrada para a função ```sqrt()```, à direita de **%>%**. A expressão é similar a:
+
+```{r}
+variavel <- 49
+sqrt(variavel)
+```
+
+Neste exemplo, o uso do operador pipe não trás qualquer vantagem. Por outro lado veja a sequência abaixo escrita da forma convencional:
+
+```{r}
+objeto <- c(2,6,3,8,10)
+sum(diff(round(sqrt(objeto),digits = 2)))
+```
+
+E utilizando o operador pipe:
+
+```{r}
+objeto <- c(2,6,3,8,10)
+
+objeto %>% sqrt() %>% round(digits = 2) %>% diff() %>% sum()
+
+```
+
+Na forma convencional, a leitura se dá de **dentro para fora** da expressão. À medida que o número de operações aumenta, a leitura e consequentemente a correção desta sequência se torna complexa.
+
+Utilizando o operador pipe a leitura se dá:
+
+1. Pegue o objeto ```variável```;
+
+2. Tire a raiz quadrada;
+
+3. Arredonde a raiz quadrada para duas casa decimais;
+
+4. Calcule a diferença de um objeto com o anterior; e
+
+5. Some as entradas.
+
+Por hora, busque entender esta sequência. As vantagens do operador pipe se tornarão mais claras quando formos falar de formatação de data frames nos capítulos a frente.
+
+```{r, echo=FALSE}
+rm(list = ls())
+```
